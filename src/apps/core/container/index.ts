@@ -27,6 +27,7 @@ import { UpdateMyPassword } from 'apps/me/application/update-my-password';
 import { MeDBRepository } from 'apps/me/domain/me-db-repository';
 import { MeTypeORMRepository } from 'apps/me/infrastructure/me-type-orm-repository';
 import { CreatePublication } from 'apps/publication/application/create-publication';
+import { GetBiddedPublications } from 'apps/publication/application/get-bidded-publications';
 import { GetMyPublications } from 'apps/publication/application/get-my-publications';
 import { GetPublicationById } from 'apps/publication/application/get-publication-by-id';
 import { GetPublications } from 'apps/publication/application/get-publications';
@@ -93,6 +94,7 @@ container.bind<VehicleHasActivePublication>(TYPES.VehicleHasActivePublication).t
 container.bind<GetPublications>(TYPES.GetPublications).to(GetPublications);
 container.bind<GetPublicationById>(TYPES.GetPublicationById).to(GetPublicationById);
 container.bind<GetMyPublications>(TYPES.GetMyPublications).to(GetMyPublications);
+container.bind<GetBiddedPublications>(TYPES.GetBiddedPublications).to(GetBiddedPublications);
 container.bind<PublicationDBRepository>(TYPES.PublicationDBRepository).to(PublicationTypeORMRepository);
 
 // Bid

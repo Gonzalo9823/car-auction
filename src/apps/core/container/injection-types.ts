@@ -42,6 +42,7 @@ export const TYPES = {
   GetPublications: Symbol.for('GetPublications'),
   GetPublicationById: Symbol.for('GetPublicationById'),
   GetMyPublications: Symbol.for('GetMyPublications'),
+  GetBiddedPublications: Symbol.for('GetBiddedPublications'),
   PublicationDBRepository: Symbol.for('PublicationDBRepository'),
 
   // Bid
