@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
 import { CustomBaseEntity } from 'infrastructure/typeorm/entities/CustomBaseEntity';
 import { RefreshTokenModel } from 'infrastructure/typeorm/entities/RefreshToken';
@@ -28,4 +28,18 @@ export class UserModel extends CustomBaseEntity {
 
   @OneToMany(() => VehicleModel, (vehicle) => vehicle.owner)
   vehicles!: VehicleModel[];
+
+  @ManyToMany(() => VehicleModel, (vehicle) => vehicle.userFavorites)
+  @JoinTable({
+    name: 'user_favorite_vehicles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'vehicle_id',
+      referencedColumnName: 'id',
+    },
+  })
+  favorites!: VehicleModel[];
 }

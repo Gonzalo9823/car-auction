@@ -18,6 +18,7 @@ import { GetRoleById } from 'apps/role/application/get-role-by-id';
 import { GetRoleByName } from 'apps/role/application/get-role-by-name';
 import { RoleDBRepository } from 'apps/role/domain/role-db-repository';
 import { RoleTypeORMRepository } from 'apps/role/infrastructure/role-type-orm-repository';
+import { AddVehicleToFavorites } from 'apps/vehicle/application/add-vehicle-to-favorites';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
 import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
@@ -51,6 +52,7 @@ container.bind<CreateVehicle>(TYPES.CreateVehicle).to(CreateVehicle);
 container.bind<GetVehicles>(TYPES.GetVehicles).to(GetVehicles);
 container.bind<GetVehicleById>(TYPES.GetVehicleById).to(GetVehicleById);
 container.bind<GetMyVehicles>(TYPES.GetMyVehicles).to(GetMyVehicles);
+container.bind<AddVehicleToFavorites>(TYPES.AddVehicleToFavorites).to(AddVehicleToFavorites);
 container.bind<VehicleDBRepository>(TYPES.VehicleDBRepository).to(VehicleTypeORMRepository);
 
 export { container };

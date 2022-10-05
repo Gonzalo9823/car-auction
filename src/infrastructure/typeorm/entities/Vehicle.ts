@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
 
 import { CustomBaseEntity } from 'infrastructure/typeorm/entities/CustomBaseEntity';
 import { UserModel } from 'infrastructure/typeorm/entities/User';
@@ -26,4 +26,7 @@ export class VehicleModel extends CustomBaseEntity {
   @ManyToOne(() => UserModel, (user) => user.vehicles)
   @JoinColumn({ name: 'owner_id' })
   owner!: UserModel;
+
+  @ManyToMany(() => UserModel, (user) => user.favorites)
+  userFavorites!: UserModel[];
 }

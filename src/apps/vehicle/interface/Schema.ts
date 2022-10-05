@@ -156,6 +156,35 @@ export interface VehicleGetRequest {
   };
 }
 
+// POST /:vehicleId/favorite opt
+export const vehicleFavoritePostOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Vehicles'],
+    description: 'Route to add a vehicle to favorites.',
+    params: yup
+      .object({
+        vehicleId: yup.string().uuid().required(),
+      })
+      .required(),
+    response: {
+      200: {},
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface VehicleFavoritePostRequest {
+  Body: {};
+  Params: {
+    vehicleId: UUID;
+  };
+  Reply: {};
+}
+
 // GET /mine opt
 export const vehiclesMineGetOpt: RouteShorthandOptions = {
   schema: createYupSchema(() => ({

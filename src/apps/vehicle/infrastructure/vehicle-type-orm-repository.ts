@@ -40,6 +40,11 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicles.map((vehicle) => VehicleTransformer.toDomain(vehicle, false, true));
   }
 
+  async addAsFavorite(user: User, vehicle: Vehicle): Promise<void> {
+    const _vehicle = await this.getVehicleByIdWithFavorites(vehicle.id);
+    await this.addVehicleAsFavorite(user, _vehicle);
+  }
+
   // Private Method
   async addDataToVehicle(vehicle: VehicleModel, user: User, vehicleData: CreateVehicleDto): Promise<void> {
     try {
@@ -82,6 +87,24 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
       relations: {
         owner: true,
       },
+      cache: 1000,
+    });
+
+    if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
+
+    return vehicle;
+  }
+
+  async getVehicleByIdWithFavorites(id: UUID): Promise<VehicleModel> {
+    const vehicle = await AppDataSource.getRepository(VehicleModel).findOne({
+      where: {
+        id,
+      },
+      relations: {
+        owner: true,
+        userFavorites: true,
+      },
+      cache: 1000,
     });
 
     if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
@@ -105,5 +128,16 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     });
 
     return vehicles;
+  }
+
+  async addVehicleAsFavorite(user: User, vehicle: VehicleModel): Promise<void> {
+    try {
+      const userModel = UserTransformer.toInfrastructure(user, 'User');
+      vehicle.userFavorites.push(userModel);
+
+      await AppDataSource.getRepository(VehicleModel).save(vehicle);
+    } catch (err) {
+      throw ErrorHandler(err);
+    }
   }
 }

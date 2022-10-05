@@ -5,11 +5,14 @@ import { container } from 'apps/core/container';
 import { TYPES } from 'apps/core/container/injection-types';
 import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
+import { AddVehicleToFavorites } from 'apps/vehicle/application/add-vehicle-to-favorites';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
 import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
 import {
+  vehicleFavoritePostOpt,
+  VehicleFavoritePostRequest,
   vehicleGetOpt,
   VehicleGetRequest,
   vehiclesGetOpt,
@@ -58,6 +61,16 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
     reply.send({
       vehicle,
     });
+  });
+
+  fastify.get<VehicleFavoritePostRequest>('/:vehicleId/favorite', vehicleFavoritePostOpt, async (request, reply) => {
+    const { vehicleId } = request.params;
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.ReadVehicle);
+
+    const addVehicleToFavorites = container.get<AddVehicleToFavorites>(TYPES.AddVehicleToFavorites);
+    await addVehicleToFavorites.execute(requestUser, vehicleId);
+
+    reply.send({});
   });
 
   fastify.get<VehiclesMineGetRequest>('/mine', vehiclesMineGetOpt, async (request, reply) => {

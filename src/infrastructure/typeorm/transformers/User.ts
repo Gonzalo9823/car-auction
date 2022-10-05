@@ -44,6 +44,7 @@ export class UserTransformer {
     userModel.name = name;
     userModel.phone = phone;
     userModel.email = email;
+    userModel.favorites = [];
 
     if (type === 'AuthUser') {
       const { encryptedPassword, role } = user as AuthUser;

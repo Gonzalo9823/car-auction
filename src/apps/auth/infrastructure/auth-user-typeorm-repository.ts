@@ -64,6 +64,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
       user.encryptedPassword = encryptedPassword;
       user.role = RoleTransformer.toInfrastructure(role);
       user.refreshTokens = [];
+      user.favorites = [];
 
       await AppDataSource.getRepository(UserModel).save(user);
     } catch (err) {

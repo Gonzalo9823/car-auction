@@ -15,4 +15,5 @@ export interface VehicleDBRepository {
   findMany(): Promise<Vehicle[]>;
   findById(id: UUID): Promise<Vehicle>;
   findMine(user: User): Promise<(Omit<Vehicle, 'owner'> & { sold: boolean })[]>;
+  addAsFavorite(user: User, vehicle: Vehicle): Promise<void>;
 }
