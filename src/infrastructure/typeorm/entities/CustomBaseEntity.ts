@@ -1,4 +1,4 @@
-import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class CustomBaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -9,4 +9,7 @@ export abstract class CustomBaseEntity {
 
   @UpdateDateColumn({ type: 'timestamp with time zone', name: 'updated_at' })
   updatedAt!: Date;
+
+  @DeleteDateColumn({ type: 'timestamp with time zone', name: 'deleted_at' })
+  deletedAt?: Date;
 }
