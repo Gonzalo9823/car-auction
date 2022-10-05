@@ -67,6 +67,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
       vehicle.model = model;
       vehicle.year = year;
       vehicle.kilometers = kilometers;
+      vehicle.sold = false;
       vehicle.owner = UserTransformer.toInfrastructure<User>(user, 'User');
 
       await AppDataSource.getRepository(VehicleModel).save(vehicle);
