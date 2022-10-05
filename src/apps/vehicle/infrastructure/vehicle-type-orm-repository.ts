@@ -63,6 +63,9 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
       relations: {
         owner: true,
       },
+      where: {
+        sold: false,
+      },
       order: {
         createdAt: 'DESC',
       },

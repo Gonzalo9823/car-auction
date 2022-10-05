@@ -8,7 +8,7 @@ import { IndexController } from 'interfaces/fastify/controllers/IndexController'
 const _routes: [string, FastifyPluginAsync][] = [
   ['/', IndexController],
   ['/auth', AuthController],
-  ['/vehicle', VehicleController],
+  ['/vehicles', VehicleController],
 ];
 
 export const routes = (app: FastifyInstance): void => {

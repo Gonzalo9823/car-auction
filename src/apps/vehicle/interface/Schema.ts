@@ -18,23 +18,23 @@ const vehicleSchema: JSONSchemaType<Omit<Vehicle, 'owner'>> = {
   required: ['id', 'licensePlate', 'brand', 'model', 'year', 'kilometers'],
 };
 
-// const vehicleWithOwnerSchema: JSONSchemaType<Vehicle> = {
-//   type: vehicleSchema.type,
-//   properties: {
-//     ...vehicleSchema.properties,
-//     owner: {
-//       type: 'object',
-//       properties: {
-//         id: { type: 'string', format: 'uuid' },
-//         name: { type: 'string' },
-//       },
-//       required: ['id', 'name'],
-//     },
-//   },
-//   required: [...vehicleSchema.required, 'owner'],
-// };
+const vehicleWithOwnerSchema: JSONSchemaType<Vehicle> = {
+  type: vehicleSchema.type,
+  properties: {
+    ...vehicleSchema.properties!,
+    owner: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', format: 'uuid' },
+        name: { type: 'string' },
+      },
+      required: ['id', 'name'],
+    },
+  },
+  required: [...vehicleSchema.required, 'owner'],
+};
 
-// POST opt
+// POST / opt
 export const vehiclesPostOpt: RouteShorthandOptions = {
   schema: createYupSchema((yup) => ({
     tags: ['Vehicles'],
@@ -75,5 +75,37 @@ export interface VehiclesPostRequest {
   Params: {};
   Reply: {
     vehicle: Omit<Vehicle, 'owner'>;
+  };
+}
+
+// GET / opt
+export const vehiclesGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Vehicles'],
+    description: 'Route to get all the available vehicles.',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          vehicles: {
+            type: 'array',
+            items: vehicleWithOwnerSchema,
+          },
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface VehiclesGetRequest {
+  Body: {};
+  Params: {};
+  Reply: {
+    vehicles: Vehicle[];
   };
 }

@@ -20,6 +20,9 @@ export class VehicleModel extends CustomBaseEntity {
   @Column()
   kilometers!: number;
 
+  @Column()
+  sold!: boolean;
+
   @ManyToOne(() => UserModel, (user) => user.vehicles)
   @JoinColumn({ name: 'owner_id' })
   owner!: UserModel;

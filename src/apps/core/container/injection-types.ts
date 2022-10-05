@@ -20,5 +20,6 @@ export const TYPES = {
 
   // Vehicle
   CreateVehicle: Symbol.for('CreateVehicle'),
+  GetVehicles: Symbol.for('GetVehicles'),
   VehicleDBRepository: Symbol.for('VehicleDBRepository'),
 };
