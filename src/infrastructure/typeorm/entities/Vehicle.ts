@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
 import { CustomBaseEntity } from 'infrastructure/typeorm/entities/CustomBaseEntity';
+import { PublicationModel } from 'infrastructure/typeorm/entities/Publication';
 import { UserModel } from 'infrastructure/typeorm/entities/User';
 
 @Entity({ name: 'vehicles' })
@@ -29,4 +30,7 @@ export class VehicleModel extends CustomBaseEntity {
 
   @ManyToMany(() => UserModel, (user) => user.favorites)
   userFavorites!: UserModel[];
+
+  @OneToMany(() => PublicationModel, (publication) => publication.vehicle)
+  publications!: PublicationModel[];
 }

@@ -1,6 +1,8 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 
+import { BidModel } from 'infrastructure/typeorm/entities/Bid';
 import { CustomBaseEntity } from 'infrastructure/typeorm/entities/CustomBaseEntity';
+import { PublicationModel } from 'infrastructure/typeorm/entities/Publication';
 import { RefreshTokenModel } from 'infrastructure/typeorm/entities/RefreshToken';
 import { RoleModel } from 'infrastructure/typeorm/entities/Role';
 import { VehicleModel } from 'infrastructure/typeorm/entities/Vehicle';
@@ -42,4 +44,13 @@ export class UserModel extends CustomBaseEntity {
     },
   })
   favorites!: VehicleModel[];
+
+  @OneToMany(() => PublicationModel, (publication) => publication.user)
+  publications!: PublicationModel[];
+
+  @OneToMany(() => BidModel, (bid) => bid.bidder)
+  bids!: BidModel[];
+
+  @OneToMany(() => PublicationModel, (publication) => publication.winner)
+  wonPublications!: PublicationModel[];
 }
