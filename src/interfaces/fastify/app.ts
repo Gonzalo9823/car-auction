@@ -61,6 +61,20 @@ app.register(fastifySwagger, {
         url: 'http://localhost:4000',
       },
     ],
+    components: {
+      securitySchemes: {
+        accessToken: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+        refreshToken: {
+          type: 'apiKey',
+          in: 'cookie',
+          name: 'r_token',
+        },
+      },
+    },
   },
   transform: ({ schema, url }) => {
     const { security, body, params, querystring, response, tags, hide, consumes, description } = { ...schema };
