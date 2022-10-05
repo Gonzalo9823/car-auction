@@ -8,7 +8,7 @@ export class RefreshTokenModel extends CustomBaseEntity {
   @Column()
   token!: string;
 
-  @ManyToOne(() => UserModel, (user) => user.refreshTokens)
+  @ManyToOne(() => UserModel, (user) => user.refreshTokens, { nullable: false })
   @JoinColumn({ name: 'user_id' })
   user!: UserModel;
 }

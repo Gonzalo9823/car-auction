@@ -23,7 +23,7 @@ export class VehicleModel extends CustomBaseEntity {
   @Column()
   sold!: boolean;
 
-  @ManyToOne(() => UserModel, (user) => user.vehicles)
+  @ManyToOne(() => UserModel, (user) => user.vehicles, { nullable: false })
   @JoinColumn({ name: 'owner_id' })
   owner!: UserModel;
 
