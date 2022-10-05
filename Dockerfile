@@ -1,5 +1,7 @@
 FROM node:16.17.0-alpine3.16 AS build-stage
 
+RUN apk update && apk upgrade && apk --no-cache add --virtual builds-deps build-base python3
+
 RUN addgroup app && adduser -S -G app app
 RUN mkdir /app && chown app:app /app
 USER app
@@ -8,6 +10,7 @@ WORKDIR /app
 COPY --chown=app:app package*.json ./
 COPY --chown=app:app patches ./patches/
 RUN npm install
+RUN npm rebuild bcrypt --build-from-source
 
 COPY --chown=app:app . .
 
