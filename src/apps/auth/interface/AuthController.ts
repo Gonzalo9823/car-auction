@@ -2,11 +2,14 @@ import { FastifyPluginAsync } from 'fastify';
 
 import { Refresh } from 'apps/auth/application/refresh';
 import { SignIn } from 'apps/auth/application/sign-in';
+import { SignOut } from 'apps/auth/application/sign-out';
 import { SignUp } from 'apps/auth/application/sign-up';
 import {
   AuthRefreshPostRequest,
   authSignInPostOpt,
   AuthSignInPostRequest,
+  AuthSignOutPostOpt,
+  AuthSignOutPostRequest,
   authSignUpPostOpt,
   AuthSignUpPostRequest,
   refreshPostOpt,
@@ -61,5 +64,19 @@ export const AuthController: FastifyPluginAsync = async (fastify): Promise<void>
     });
 
     reply.send({ accessToken: newAccessToken });
+  });
+
+  fastify.post<AuthSignOutPostRequest>('/sign-out', { ...AuthSignOutPostOpt, preValidation: [fastify.needsRefreshToken] }, async (request, reply) => {
+    const { r_token: refreshToken } = request.cookies;
+
+    if (refreshToken) {
+      const signOutUser = container.get<SignOut>(TYPES.SignOut);
+      await signOutUser.execute(request.user.id, refreshToken);
+    }
+
+    reply.clearCookie('r_token');
+    reply.clearCookie('a_token');
+
+    reply.send({});
   });
 };

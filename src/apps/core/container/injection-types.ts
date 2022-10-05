@@ -12,6 +12,7 @@ export const TYPES = {
   GetAuthUserById: Symbol.for('GetAuthUserById'),
   Refresh: Symbol.for('Refresh'),
   CheckRefreshToken: Symbol.for('CheckRefreshToken'),
+  SignOut: Symbol.for('SignOut'),
   AuthUserDBRepository: Symbol.for('AuthUserDBRepository'),
 
   // Me

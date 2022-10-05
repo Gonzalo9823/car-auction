@@ -8,6 +8,7 @@ import { GetAuthUserById } from 'apps/auth/application/get-auth-user-by-id';
 import { Refresh } from 'apps/auth/application/refresh';
 import { RemoveRefreshToken } from 'apps/auth/application/remove-refresh-token';
 import { SignIn } from 'apps/auth/application/sign-in';
+import { SignOut } from 'apps/auth/application/sign-out';
 import { SignUp } from 'apps/auth/application/sign-up';
 import { AuthUserDBRepository } from 'apps/auth/domain/auth-user-db-repository';
 import { AuthUserTypeORMRepository } from 'apps/auth/infrastructure/auth-user-typeorm-repository';
@@ -47,6 +48,7 @@ container.bind<SignIn>(TYPES.SignIn).to(SignIn);
 container.bind<GetAuthUserById>(TYPES.GetAuthUserById).to(GetAuthUserById);
 container.bind<Refresh>(TYPES.Refresh).to(Refresh);
 container.bind<CheckRefreshToken>(TYPES.CheckRefreshToken).to(CheckRefreshToken);
+container.bind<SignOut>(TYPES.SignOut).to(SignOut);
 container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserTypeORMRepository);
 
 // Me

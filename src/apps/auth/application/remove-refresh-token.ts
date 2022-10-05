@@ -9,7 +9,7 @@ import { RefreshToken } from 'apps/core/domain/token';
 export class RemoveRefreshToken {
   constructor(@inject(TYPES.AuthUserDBRepository) private readonly authUserDBRepository: AuthUserDBRepository) {}
 
-  async execute(user: AuthUser, token: RefreshToken): Promise<void> {
-    return this.authUserDBRepository.removeRefreshToken(user.id, token, true);
+  async execute(user: AuthUser, token: RefreshToken, shouldInvalidate: boolean): Promise<void> {
+    return this.authUserDBRepository.removeRefreshToken(user.id, token, shouldInvalidate);
   }
 }

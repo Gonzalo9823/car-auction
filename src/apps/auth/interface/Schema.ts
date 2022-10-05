@@ -28,6 +28,7 @@ export interface AuthSignUpPostRequest {
     email: string;
     password: string;
   };
+  Params: {};
   Reply: {};
 }
 
@@ -65,6 +66,7 @@ export interface AuthSignInPostRequest {
     email: string;
     password: string;
   };
+  Params: {};
   Reply: {
     accessToken: string;
   };
@@ -100,7 +102,36 @@ export const refreshPostOpt: RouteShorthandOptions = {
 
 export interface AuthRefreshPostRequest {
   Body: {};
+  Params: {};
   Reply: {
     accessToken: string;
   };
+}
+
+// POST /signOut opt
+export const AuthSignOutPostOpt: RouteShorthandOptions = {
+  schema: {
+    tags: ['Auth'],
+    response: {
+      200: {
+        headers: {
+          r_token: {
+            type: 'string',
+            description: 'Remove Refresh Token',
+          },
+        },
+      },
+    },
+    security: [
+      {
+        refreshToken: [],
+      },
+    ],
+  },
+};
+
+export interface AuthSignOutPostRequest {
+  Body: {};
+  Params: {};
+  Reply: {};
 }
