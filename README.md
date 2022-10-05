@@ -13,7 +13,12 @@ This apps is written on TypeScript and uses `TypeORM` as the DDBB ORM and `Fasti
 - Front End
 
 ## IMPORTANT
+
 This version of the App does not count with a Front End so to test the different end points you must use SwaggerUI which can be access on [http://localhost:4000/docs](http://localhost:4000/docs).
+
+## Docker?
+
+Just run `docker-compose up`
 
 ## Environment
 
