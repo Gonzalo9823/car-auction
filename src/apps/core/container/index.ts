@@ -14,6 +14,7 @@ import { AuthUserDBRepository } from 'apps/auth/domain/auth-user-db-repository';
 import { AuthUserTypeORMRepository } from 'apps/auth/infrastructure/auth-user-typeorm-repository';
 import { CreateBid } from 'apps/bid/application/create-bid';
 import { GetBiggestBidByPublicationId } from 'apps/bid/application/get-biggest-bid-by-publication-id';
+import { GetMyBids } from 'apps/bid/application/get-my-bids';
 import { BidDBRepository } from 'apps/bid/domain/bid-db-repository';
 import { BidTypeORMRepository } from 'apps/bid/infrastructure/bid-type-orm-repository';
 import { CheckGrantByRoleId } from 'apps/core/application/check-grant-by-role-id';
@@ -97,6 +98,7 @@ container.bind<PublicationDBRepository>(TYPES.PublicationDBRepository).to(Public
 // Bid
 container.bind<GetBiggestBidByPublicationId>(TYPES.GetBiggestBidByPublicationId).to(GetBiggestBidByPublicationId);
 container.bind<CreateBid>(TYPES.CreateBid).to(CreateBid);
+container.bind<GetMyBids>(TYPES.GetMyBids).to(GetMyBids);
 container.bind<BidDBRepository>(TYPES.BidDBRepository).to(BidTypeORMRepository);
 
 export { container };

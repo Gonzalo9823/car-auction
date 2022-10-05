@@ -1,7 +1,8 @@
 import { FastifyPluginAsync } from 'fastify';
 
 import { CreateBid } from 'apps/bid/application/create-bid';
-import { bidsPostOpt, BidsPostRequest } from 'apps/bid/interface/Schema';
+import { GetMyBids } from 'apps/bid/application/get-my-bids';
+import { bidsMineGetOpt, BidsMineGetRequest, bidsPostOpt, BidsPostRequest } from 'apps/bid/interface/Schema';
 import { authorizeWithGrants } from 'apps/core/authorizeWithGrants';
 import { container } from 'apps/core/container';
 import { TYPES } from 'apps/core/container/injection-types';
@@ -23,6 +24,17 @@ export const BidController: FastifyPluginAsync = async (fastify): Promise<void> 
 
     return reply.send({
       bid,
+    });
+  });
+
+  fastify.get<BidsMineGetRequest>('/', bidsMineGetOpt, async (request, reply) => {
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.ViewBid);
+
+    const getMyBids = container.get<GetMyBids>(TYPES.GetMyBids);
+    const bids = await getMyBids.execute(requestUser);
+
+    return reply.send({
+      bids,
     });
   });
 };

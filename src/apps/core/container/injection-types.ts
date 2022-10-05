@@ -47,5 +47,6 @@ export const TYPES = {
   // Bid
   GetBiggestBidByPublicationId: Symbol.for('GetBiggestBidByPublicationId'),
   CreateBid: Symbol.for('CreateBid'),
+  GetMyBids: Symbol.for('GetMyBids'),
   BidDBRepository: Symbol.for('BidDBRepository'),
 };

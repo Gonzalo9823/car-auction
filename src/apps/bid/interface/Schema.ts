@@ -82,3 +82,35 @@ export interface BidsPostRequest {
     bid: Bid;
   };
 }
+
+// GET /mine opt
+export const bidsMineGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Bids'],
+    description: 'Route to get my bids.',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          bids: {
+            type: 'array',
+            items: bidSchema,
+          },
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface BidsMineGetRequest {
+  Body: {};
+  Params: {};
+  Reply: {
+    bids: Bid[];
+  };
+}
