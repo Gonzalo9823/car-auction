@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "postinstall": "patch-package",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "tsc --noEmit && eslint \"{src,tests}/**/*.ts\"",
-    "start:dev": "clear && NODE_ENV=development ts-node-dev -r tsconfig-paths/register --poll --respawn src/interfaces/fastify/index.ts",
-    "typeorm:dev": "NODE_ENV=development node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/infrastructure/typeorm/index.ts",
     "build": "tsc && rm -v -rf src",
     "start": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register ./build/src/interfaces/fastify/index.js",
     "typeorm": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d build/src/infrastructure/typeorm/index.js",
-    "prepare": "husky install"
+    "start:dev": "clear && NODE_ENV=development ts-node-dev -r tsconfig-paths/register --poll --respawn src/interfaces/fastify/index.ts",
+    "typeorm:dev": "NODE_ENV=development node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/infrastructure/typeorm/index.ts"
   },
   "author": "Car Auction",
   "license": "ISC",
