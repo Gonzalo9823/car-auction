@@ -10,7 +10,10 @@ This apps is written on TypeScript and uses `TypeORM` as the DDBB ORM and `Fasti
 - Tests.
 - Send emails when necessary.
 - Cron Job to check Publications.
+- Front End
 
+## IMPORTANT
+This version of the App does not count with a Front End so to test the different end points you must use SwaggerUI which can be access on [http://localhost:4000/docs](http://localhost:4000/docs).
 
 ## Environment
 
@@ -65,9 +68,6 @@ Start the server
 
 **By default the API will run on port 4000.**
 
-## Documentation
-
-Too see documentation for every route of the API you must go to the Swagger Docs File [http://localhost:4000/docs](http://localhost:4000/docs).
 
 ## Package Scripts
 
