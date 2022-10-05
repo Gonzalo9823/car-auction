@@ -1,6 +1,7 @@
 import type { JSONSchemaType } from 'ajv';
 import { RouteShorthandOptions } from 'fastify';
 
+import { UUID } from 'apps/core/domain/uuid';
 import { Publication } from 'apps/publication/domain/publication';
 
 import { createYupSchema } from 'interfaces/fastify/yup-schema';
@@ -136,5 +137,41 @@ export interface PublicationsGetRequest {
   Params: {};
   Reply: {
     publications: Publication[];
+  };
+}
+
+// GET /:publicationId opt
+export const publicationGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Publications'],
+    description: 'Route to get a publication.',
+    params: yup
+      .object({
+        publicationId: yup.string().uuid().required(),
+      })
+      .required(),
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          publication: publicationSchema,
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface PublicationGetRequest {
+  Body: {};
+  Params: {
+    publicationId: UUID;
+  };
+  Reply: {
+    publication: Publication;
   };
 }

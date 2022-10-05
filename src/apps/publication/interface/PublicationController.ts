@@ -6,8 +6,16 @@ import { TYPES } from 'apps/core/container/injection-types';
 import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { CreatePublication } from 'apps/publication/application/create-publication';
+import { GetPublicationById } from 'apps/publication/application/get-publication-by-id';
 import { GetPublications } from 'apps/publication/application/get-publications';
-import { publicationsGetOpt, PublicationsGetRequest, publicationsPostOpt, PublicationsPostRequest } from 'apps/publication/interface/Schema';
+import {
+  publicationGetOpt,
+  PublicationGetRequest,
+  publicationsGetOpt,
+  PublicationsGetRequest,
+  publicationsPostOpt,
+  PublicationsPostRequest,
+} from 'apps/publication/interface/Schema';
 
 export const PublicationController: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.addHook('onRequest', async (request) => {
@@ -34,6 +42,18 @@ export const PublicationController: FastifyPluginAsync = async (fastify): Promis
 
     return reply.send({
       publications,
+    });
+  });
+
+  fastify.get<PublicationGetRequest>('/:publicationId', publicationGetOpt, async (request, reply) => {
+    const { publicationId } = request.params;
+    await authorizeWithGrants(request.user, AvailableGrant.ReadPublication);
+
+    const getPublicationById = container.get<GetPublicationById>(TYPES.GetPublicationById);
+    const publication = await getPublicationById.execute(publicationId);
+
+    return reply.send({
+      publication,
     });
   });
 };
