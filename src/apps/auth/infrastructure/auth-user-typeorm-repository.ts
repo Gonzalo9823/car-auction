@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { Raw } from 'typeorm';
 
 import { AuthUser } from 'apps/auth/domain/auth-user';
 import { AuthUserDBRepository, CreateUserDto } from 'apps/auth/domain/auth-user-db-repository';
@@ -119,10 +120,11 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     try {
       const _refreshToken = await AppDataSource.getRepository(RefreshTokenModel).findOne({
         where: {
-          token: refreshToken,
           user: {
             id: user.id,
           },
+          token: refreshToken,
+          deletedAt: Raw((deletedAt) => `${deletedAt} IS NULL OR now() <= ${deletedAt} + interval '1 minutes'`),
         },
       });
 

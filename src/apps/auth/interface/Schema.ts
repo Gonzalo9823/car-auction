@@ -69,3 +69,38 @@ export interface AuthSignInPostRequest {
     accessToken: string;
   };
 }
+
+// POST /refresh opt
+export const refreshPostOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Auth'],
+    description: 'Route to ask for a new Refresh Token',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          accessToken: { type: 'string' },
+        },
+        headers: {
+          r_token: {
+            type: 'string',
+            description: 'Refresh Token',
+          },
+        },
+        required: ['accessToken'],
+      },
+    },
+    security: [
+      {
+        refreshToken: [],
+      },
+    ],
+  })),
+};
+
+export interface AuthRefreshPostRequest {
+  Body: {};
+  Reply: {
+    accessToken: string;
+  };
+}

@@ -4,8 +4,10 @@ import helmet from '@fastify/helmet';
 import fastifySwagger, { JSONObject } from '@fastify/swagger';
 import requestLogger from '@mgcrea/fastify-request-logger';
 import yupToJsonSchema from '@sodaru/yup-to-json-schema';
-import fastify from 'fastify';
+import fastify, { FastifyRequest } from 'fastify';
 import { AnySchema } from 'yup';
+
+import { needsRefreshToken } from 'apps/core/util/token';
 
 import { ErrorHandler } from 'interfaces/fastify/ErrorHandler';
 import { routes } from 'interfaces/fastify/routes';
@@ -46,6 +48,11 @@ app.register(cookie, {
 
 // Add Yup Schema Validator
 app.register(fastifyYupSchema);
+
+// Add needsRefreshToken Decorator
+app.decorate('needsRefreshToken', async (request: FastifyRequest) => {
+  request.user = needsRefreshToken(request.cookies.r_token);
+});
 
 // Add Swagger
 app.register(fastifySwagger, {

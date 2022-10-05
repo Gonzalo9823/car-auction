@@ -1,8 +1,16 @@
 import { FastifyPluginAsync } from 'fastify';
 
+import { Refresh } from 'apps/auth/application/refresh';
 import { SignIn } from 'apps/auth/application/sign-in';
 import { SignUp } from 'apps/auth/application/sign-up';
-import { authSignInPostOpt, AuthSignInPostRequest, authSignUpPostOpt, AuthSignUpPostRequest } from 'apps/auth/interface/Schema';
+import {
+  AuthRefreshPostRequest,
+  authSignInPostOpt,
+  AuthSignInPostRequest,
+  authSignUpPostOpt,
+  AuthSignUpPostRequest,
+  refreshPostOpt,
+} from 'apps/auth/interface/Schema';
 import { container } from 'apps/core/container';
 import { TYPES } from 'apps/core/container/injection-types';
 
@@ -31,5 +39,22 @@ export const AuthController: FastifyPluginAsync = async (fastify): Promise<void>
     });
 
     reply.send({ accessToken });
+  });
+
+  fastify.post<AuthRefreshPostRequest>('/refresh', { ...refreshPostOpt, preValidation: [fastify.needsRefreshToken] }, async (request, reply) => {
+    const { r_token: refreshToken } = request.cookies;
+
+    const refresh = container.get<Refresh>(TYPES.Refresh);
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await refresh.execute(request.user.id, refreshToken);
+
+    reply.setCookie('r_token', newRefreshToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: true,
+      secure: config.NODE_ENV === 'production',
+      path: '/',
+    });
+
+    reply.send({ accessToken: newAccessToken });
   });
 };
