@@ -17,4 +17,8 @@ export const TYPES = {
   // Grant
   CheckGrantByRoleId: Symbol.for('CheckGrantByRoleId'),
   GrantDBRepository: Symbol.for('GrantDBRepository'),
+
+  // Vehicle
+  CreateVehicle: Symbol.for('CreateVehicle'),
+  VehicleDBRepository: Symbol.for('VehicleDBRepository'),
 };
