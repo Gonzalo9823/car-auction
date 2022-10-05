@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 
+import { AddRefreshToken } from 'apps/auth/application/add-refresh-token';
 import { SignUp } from 'apps/auth/application/sign-up';
 import { AuthUserDBRepository } from 'apps/auth/domain/auth-user-db-repository';
 import { AuthUserTypeORMRepository } from 'apps/auth/infrastructure/auth-user-typeorm-repository';
@@ -20,6 +21,7 @@ container.bind<RoleDBRepository>(TYPES.RoleDBRepository).to(RoleTypeORMRepositor
 
 // Auth
 container.bind<SignUp>(TYPES.SignUp).to(SignUp);
+container.bind<AddRefreshToken>(TYPES.AddRefreshToken).to(AddRefreshToken);
 container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserTypeORMRepository);
 
 export { container };
