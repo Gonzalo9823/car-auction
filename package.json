@@ -10,10 +10,17 @@
     "typeorm:dev": "NODE_ENV=development node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/infrastructure/typeorm/index.ts",
     "build": "tsc && rm -v -rf src",
     "start": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register ./build/src/interfaces/fastify/index.js",
-    "typeorm": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d build/src/infrastructure/typeorm/index.js"
+    "typeorm": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d build/src/infrastructure/typeorm/index.js",
+    "prepare": "husky install"
   },
   "author": "Car Auction",
   "license": "ISC",
+  "lint-staged": {
+    "**/*.{js,ts}": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@shopify/eslint-plugin": "^42.0.1",
     "@types/bcrypt": "^5.0.0",
@@ -29,6 +36,8 @@
     "eslint-plugin-no-relative-import-paths": "^1.4.0",
     "eslint-plugin-prettier": "^4.2.1",
     "fastify-plugin": "^4.2.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.3"
   },
