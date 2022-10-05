@@ -7,6 +7,7 @@ export const TYPES = {
   // Auth
   SignUp: Symbol.for('SignUp'),
   AddRefreshToken: Symbol.for('AddRefreshToken'),
+  RemoveRefreshToken: Symbol.for('RemoveRefreshToken'),
   SignIn: Symbol.for('SignIn'),
   GetAuthUserById: Symbol.for('GetAuthUserById'),
   AuthUserDBRepository: Symbol.for('AuthUserDBRepository'),

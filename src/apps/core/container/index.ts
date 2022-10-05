@@ -4,6 +4,7 @@ import { Container } from 'inversify';
 
 import { AddRefreshToken } from 'apps/auth/application/add-refresh-token';
 import { GetAuthUserById } from 'apps/auth/application/get-auth-user-by-id';
+import { RemoveRefreshToken } from 'apps/auth/application/remove-refresh-token';
 import { SignIn } from 'apps/auth/application/sign-in';
 import { SignUp } from 'apps/auth/application/sign-up';
 import { AuthUserDBRepository } from 'apps/auth/domain/auth-user-db-repository';
@@ -39,6 +40,7 @@ container.bind<RoleDBRepository>(TYPES.RoleDBRepository).to(RoleTypeORMRepositor
 // Auth
 container.bind<SignUp>(TYPES.SignUp).to(SignUp);
 container.bind<AddRefreshToken>(TYPES.AddRefreshToken).to(AddRefreshToken);
+container.bind<RemoveRefreshToken>(TYPES.RemoveRefreshToken).to(RemoveRefreshToken);
 container.bind<SignIn>(TYPES.SignIn).to(SignIn);
 container.bind<GetAuthUserById>(TYPES.GetAuthUserById).to(GetAuthUserById);
 container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserTypeORMRepository);
