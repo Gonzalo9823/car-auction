@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 
 import { CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 import { UUID } from 'apps/core/domain/uuid';
-import { Role } from 'apps/role/domain/role';
+import { AvailableRole, Role } from 'apps/role/domain/role';
 import { RoleDBRepository } from 'apps/role/domain/role-db-repository';
 
 import { AppDataSource } from 'infrastructure/typeorm';
@@ -15,6 +15,18 @@ export class RoleTypeORMRepository implements RoleDBRepository {
     const role = await AppDataSource.getRepository(RoleModel).findOne({
       where: {
         id,
+      },
+    });
+
+    if (!role) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound);
+
+    return RoleTransformer.toDomain(role);
+  }
+
+  async findByName(name: AvailableRole): Promise<Role> {
+    const role = await AppDataSource.getRepository(RoleModel).findOne({
+      where: {
+        name,
       },
     });
 
