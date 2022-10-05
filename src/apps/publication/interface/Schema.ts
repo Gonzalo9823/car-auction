@@ -124,11 +124,6 @@ export const publicationsGetOpt: RouteShorthandOptions = {
         },
       },
     },
-    security: [
-      {
-        accessToken: [],
-      },
-    ],
   })),
 };
 
@@ -158,11 +153,6 @@ export const publicationGetOpt: RouteShorthandOptions = {
         },
       },
     },
-    security: [
-      {
-        accessToken: [],
-      },
-    ],
   })),
 };
 

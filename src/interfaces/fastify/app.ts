@@ -7,7 +7,7 @@ import yupToJsonSchema from '@sodaru/yup-to-json-schema';
 import fastify, { FastifyRequest } from 'fastify';
 import { AnySchema } from 'yup';
 
-import { needsRefreshToken } from 'apps/core/util/token';
+import { needsAccessToken, needsRefreshToken } from 'apps/core/util/token';
 
 import { ErrorHandler } from 'interfaces/fastify/ErrorHandler';
 import { routes } from 'interfaces/fastify/routes';
@@ -52,6 +52,11 @@ app.register(fastifyYupSchema);
 // Add needsRefreshToken Decorator
 app.decorate('needsRefreshToken', async (request: FastifyRequest) => {
   request.user = needsRefreshToken(request.cookies.r_token);
+});
+
+// Add needsAccessToken Decorator
+app.decorate('needsAccessToken', async (request: FastifyRequest) => {
+  request.user = needsAccessToken(request.headers.authorization);
 });
 
 // Add Swagger
