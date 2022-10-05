@@ -7,6 +7,7 @@ import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { AddVehicleToFavorites } from 'apps/vehicle/application/add-vehicle-to-favorites';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
+import { GetFavoriteVehicles } from 'apps/vehicle/application/get-favorites-vehicles';
 import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
@@ -15,6 +16,8 @@ import {
   VehicleFavoritePostRequest,
   vehicleGetOpt,
   VehicleGetRequest,
+  vehiclesFavoritesGetOpt,
+  VehiclesFavoritesGetRequest,
   vehiclesGetOpt,
   VehiclesGetRequest,
   vehiclesMineGetOpt,
@@ -78,6 +81,17 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
 
     const getMyVehicles = container.get<GetMyVehicles>(TYPES.GetMyVehicles);
     const vehicles = await getMyVehicles.execute(requestUser);
+
+    reply.send({
+      vehicles,
+    });
+  });
+
+  fastify.get<VehiclesFavoritesGetRequest>('/favorites', vehiclesFavoritesGetOpt, async (request, reply) => {
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.ViewVehicle);
+
+    const getFavoriteVehicles = container.get<GetFavoriteVehicles>(TYPES.GetFavoriteVehicles);
+    const vehicles = await getFavoriteVehicles.execute(requestUser);
 
     reply.send({
       vehicles,

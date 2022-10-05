@@ -45,6 +45,12 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     await this.addVehicleAsFavorite(user, _vehicle);
   }
 
+  async findFavorites(user: User): Promise<Vehicle[]> {
+    const vehicles = await this.getVehiclesWithFavorites(user.id);
+
+    return vehicles.map((vehicle) => VehicleTransformer.toDomain<Vehicle>(vehicle, true, false));
+  }
+
   // Private Method
   async addDataToVehicle(vehicle: VehicleModel, user: User, vehicleData: CreateVehicleDto): Promise<void> {
     try {
@@ -93,6 +99,25 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
 
     return vehicle;
+  }
+
+  async getVehiclesWithFavorites(userId: UUID): Promise<VehicleModel[]> {
+    const vehicles = await AppDataSource.getRepository(VehicleModel).find({
+      where: {
+        userFavorites: {
+          id: userId,
+        },
+      },
+      relations: {
+        owner: true,
+        userFavorites: true,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+
+    return vehicles;
   }
 
   async getVehicleByIdWithFavorites(id: UUID): Promise<VehicleModel> {

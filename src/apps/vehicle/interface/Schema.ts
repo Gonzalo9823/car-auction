@@ -216,3 +216,35 @@ export interface VehiclesMineGetRequest {
     vehicles: (Omit<Vehicle, 'owner'> & { sold: boolean })[];
   };
 }
+
+// GET /favorites opt
+export const vehiclesFavoritesGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Vehicles'],
+    description: 'Route to get all the favorites vehicles.',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          vehicles: {
+            type: 'array',
+            items: vehicleWithOwnerSchema,
+          },
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface VehiclesFavoritesGetRequest {
+  Body: {};
+  Params: {};
+  Reply: {
+    vehicles: Vehicle[];
+  };
+}
