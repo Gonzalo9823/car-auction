@@ -1,0 +1,52 @@
+{
+  "name": "back-end-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "patch-package",
+    "lint": "tsc --noEmit && eslint \"{src,tests}/**/*.ts\"",
+    "start:dev": "clear && NODE_ENV=development ts-node-dev -r tsconfig-paths/register --poll --respawn src/interfaces/fastify/index.ts",
+    "typeorm:dev": "NODE_ENV=development node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/infrastructure/typeorm/index.ts",
+    "build": "tsc && rm -v -rf src",
+    "start": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register ./build/src/interfaces/fastify/index.js",
+    "typeorm": "TS_NODE_BASEURL=./build/src node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d build/src/infrastructure/typeorm/index.js"
+  },
+  "author": "Car Auction",
+  "license": "ISC",
+  "devDependencies": {
+    "@shopify/eslint-plugin": "^42.0.1",
+    "@types/http-errors": "^1.8.2",
+    "@types/node": "^18.7.20",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "ajv": "^8.11.0",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-relative-import-paths": "^1.4.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "fastify-plugin": "^4.2.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^7.3.0",
+    "@fastify/helmet": "^10.0.0",
+    "@fastify/swagger": "^7.6.0",
+    "@mgcrea/fastify-request-logger": "^0.6.1",
+    "@mgcrea/pino-pretty-compact": "^0.6.0",
+    "@sodaru/yup-to-json-schema": "^1.0.0",
+    "dotenv": "^16.0.2",
+    "fastify": "^4.6.0",
+    "http-errors": "^2.0.0",
+    "inversify": "^6.0.1",
+    "patch-package": "^6.4.7",
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "tsconfig-paths": "^4.1.0",
+    "typeorm": "^0.3.10",
+    "yup": "^0.32.11"
+  }
+}

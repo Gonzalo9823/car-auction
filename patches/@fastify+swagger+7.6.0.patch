@@ -1,0 +1,17 @@
+diff --git a/node_modules/@fastify/swagger/static/swagger-initializer.js b/node_modules/@fastify/swagger/static/swagger-initializer.js
+index c1461a0..b6a82e0 100644
+--- a/node_modules/@fastify/swagger/static/swagger-initializer.js
++++ b/node_modules/@fastify/swagger/static/swagger-initializer.js
+@@ -16,12 +16,9 @@ window.onload = function () {
+           deepLinking: true,
+           presets: [
+             SwaggerUIBundle.presets.apis,
+-            SwaggerUIStandalonePreset
+           ],
+           plugins: [
+-            SwaggerUIBundle.plugins.DownloadUrl
+           ],
+-          layout: "StandaloneLayout"
+         }, config, {
+           url: resolveUrl('./json').replace('static/json', 'json'),
+           oauth2RedirectUrl: resolveUrl('./oauth2-redirect.html')
