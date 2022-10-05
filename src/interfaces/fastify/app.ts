@@ -1,3 +1,4 @@
+import cookie, { FastifyCookieOptions } from '@fastify/cookie';
 import formbody from '@fastify/formbody';
 import helmet from '@fastify/helmet';
 import fastifySwagger, { JSONObject } from '@fastify/swagger';
@@ -9,6 +10,8 @@ import { AnySchema } from 'yup';
 import { ErrorHandler } from 'interfaces/fastify/ErrorHandler';
 import { routes } from 'interfaces/fastify/routes';
 import { fastifyYupSchema } from 'interfaces/fastify/yup-schema';
+
+import config from '@/config';
 
 const app = fastify({
   logger: { transport: { target: '@mgcrea/pino-pretty-compact', options: { colorize: true } } },
@@ -34,6 +37,12 @@ app.register(formbody);
 
 // Add Error Handler
 app.setErrorHandler(ErrorHandler);
+
+// Add Cookie Plugin
+app.register(cookie, {
+  secret: config.COOKIE_SECRET,
+  parseOptions: {},
+} as FastifyCookieOptions);
 
 // Add Yup Schema Validator
 app.register(fastifyYupSchema);

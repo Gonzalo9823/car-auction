@@ -30,3 +30,42 @@ export interface AuthSignUpPostRequest {
   };
   Reply: {};
 }
+
+// POST /auth/sign-in opt
+export const authSignInPostOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Auth'],
+    description: 'Route to sign in on the plataform.',
+    body: yup
+      .object({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+      })
+      .required(),
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          accessToken: { type: 'string' },
+        },
+        headers: {
+          r_token: {
+            type: 'string',
+            description: 'Refresh Token',
+          },
+        },
+        required: ['accessToken'],
+      },
+    },
+  })),
+};
+
+export interface AuthSignInPostRequest {
+  Body: {
+    email: string;
+    password: string;
+  };
+  Reply: {
+    accessToken: string;
+  };
+}
