@@ -6,6 +6,7 @@ import { TYPES } from 'apps/core/container/injection-types';
 import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
+import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
 import {
@@ -13,6 +14,8 @@ import {
   VehicleGetRequest,
   vehiclesGetOpt,
   VehiclesGetRequest,
+  vehiclesMineGetOpt,
+  VehiclesMineGetRequest,
   vehiclesPostOpt,
   VehiclesPostRequest,
 } from 'apps/vehicle/interface/Schema';
@@ -54,6 +57,17 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
 
     reply.send({
       vehicle,
+    });
+  });
+
+  fastify.get<VehiclesMineGetRequest>('/mine', vehiclesMineGetOpt, async (request, reply) => {
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.ViewVehicle);
+
+    const getMyVehicles = container.get<GetMyVehicles>(TYPES.GetMyVehicles);
+    const vehicles = await getMyVehicles.execute(requestUser);
+
+    reply.send({
+      vehicles,
     });
   });
 };

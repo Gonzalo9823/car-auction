@@ -19,25 +19,25 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
 
     await this.addDataToVehicle(newVehicle, user, vehicleData);
 
-    return VehicleTransformer.toDomain(newVehicle, false);
+    return VehicleTransformer.toDomain(newVehicle, false, false);
   }
 
   async findMany(): Promise<Vehicle[]> {
     const vehicles = await this.getVehicles();
 
-    return vehicles.map((vehicle) => VehicleTransformer.toDomain<Vehicle>(vehicle, true));
+    return vehicles.map((vehicle) => VehicleTransformer.toDomain<Vehicle>(vehicle, true, false));
   }
 
   async findById(id: UUID): Promise<Vehicle> {
     const vehicle = await this.getVehicleById(id);
 
-    return VehicleTransformer.toDomain<Vehicle>(vehicle, true);
+    return VehicleTransformer.toDomain<Vehicle>(vehicle, true, false);
   }
 
-  async findMine(user: User): Promise<Omit<Vehicle, 'owner'>[]> {
+  async findMine(user: User): Promise<(Omit<Vehicle, 'owner'> & { sold: boolean })[]> {
     const vehicles = await this.getMineVehicles(user.id);
 
-    return vehicles.map((vehicle) => VehicleTransformer.toDomain(vehicle, false));
+    return vehicles.map((vehicle) => VehicleTransformer.toDomain(vehicle, false, true));
   }
 
   // Private Method

@@ -35,6 +35,15 @@ const vehicleWithOwnerSchema: JSONSchemaType<Vehicle> = {
   required: [...vehicleSchema.required, 'owner'],
 };
 
+const vehicleWithSoldSchema: JSONSchemaType<Omit<Vehicle, 'owner'> & { sold: boolean }> = {
+  type: vehicleSchema.type,
+  properties: {
+    ...vehicleSchema.properties!,
+    sold: { type: 'boolean' },
+  },
+  required: [...vehicleSchema.required, 'sold'],
+};
+
 // POST / opt
 export const vehiclesPostOpt: RouteShorthandOptions = {
   schema: createYupSchema((yup) => ({
@@ -144,5 +153,37 @@ export interface VehicleGetRequest {
   };
   Reply: {
     vehicle: Vehicle;
+  };
+}
+
+// GET /mine opt
+export const vehiclesMineGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Vehicles'],
+    description: 'Route to get all my vehicles.',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          vehicles: {
+            type: 'array',
+            items: vehicleWithSoldSchema,
+          },
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface VehiclesMineGetRequest {
+  Body: {};
+  Params: {};
+  Reply: {
+    vehicles: (Omit<Vehicle, 'owner'> & { sold: boolean })[];
   };
 }
