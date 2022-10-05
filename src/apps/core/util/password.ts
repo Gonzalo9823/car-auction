@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcrypt';
 
-import { CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
+import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 
 import config from '@/config';
 
@@ -10,10 +10,10 @@ export const checkPassword = async (password: string, encryptedPassword: string,
 
   if (!match) {
     if (messageOnlyPassword) {
-      throw new CustomError(ErrorType.Validation, ErrorCode.IncorrectPassword);
+      throw new CustomError(ErrorType.Validation, ErrorCode.IncorrectPassword, [{ type: ContextErrorType.InvalidData, path: 'checkPassword' }]);
     }
 
-    throw new CustomError(ErrorType.NotFound, ErrorCode.EmailOrPasswordIncorrect);
+    throw new CustomError(ErrorType.NotFound, ErrorCode.EmailOrPasswordIncorrect, [{ type: ContextErrorType.InvalidData, path: 'checkPassword' }]);
   }
 };
 

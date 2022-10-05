@@ -1,5 +1,5 @@
 import { AuthUser } from 'apps/auth/domain/auth-user';
-import { CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
+import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 import { User } from 'apps/core/domain/user';
 import { PartialBy } from 'apps/core/util/partialBy';
 
@@ -18,7 +18,12 @@ export class UserTransformer {
     };
 
     if (type === 'AuthUser') {
-      if (!role) throw new CustomError(ErrorType.InternalServerError, ErrorCode.CantTransformInfrastructureToDomain);
+      if (!role) {
+        throw new CustomError(ErrorType.InternalServerError, ErrorCode.CantTransformInfrastructureToDomain, [
+          { type: ContextErrorType.Transformer, path: 'User/AuthUser' },
+          { type: ContextErrorType.InvalidData, path: 'User/AuthUser/role' },
+        ]);
+      }
 
       return {
         ...baseUser,

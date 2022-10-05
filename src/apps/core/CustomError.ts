@@ -23,6 +23,7 @@ export enum ContextErrorType {
   Required = 'REQUIRED',
   Unique = 'UNIQUE',
   UniqueProperty = 'UNIQUE_PROPERTY',
+  Transformer = 'TRANSFORMER',
 }
 
 export class CustomError extends Error {

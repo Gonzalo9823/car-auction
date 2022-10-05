@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 
-import { CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
+import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 import { UUID } from 'apps/core/domain/uuid';
 import { AvailableRole, Role } from 'apps/role/domain/role';
 import { RoleDBRepository } from 'apps/role/domain/role-db-repository';
@@ -18,7 +18,7 @@ export class RoleTypeORMRepository implements RoleDBRepository {
       },
     });
 
-    if (!role) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound);
+    if (!role) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'Role' }]);
 
     return RoleTransformer.toDomain(role);
   }
@@ -30,7 +30,7 @@ export class RoleTypeORMRepository implements RoleDBRepository {
       },
     });
 
-    if (!role) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound);
+    if (!role) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'Role' }]);
 
     return RoleTransformer.toDomain(role);
   }
