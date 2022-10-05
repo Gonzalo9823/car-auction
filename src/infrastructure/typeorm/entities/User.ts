@@ -12,7 +12,7 @@ export class UserModel extends CustomBaseEntity {
   @Column()
   phone!: string;
 
-  @Column()
+  @Column({ unique: true })
   email!: string;
 
   @Column({ name: 'encrypted_password' })
