@@ -4,6 +4,13 @@ First version of the Cat Auction API used to power the different services needed
 
 This apps is written on TypeScript and uses `TypeORM` as the DDBB ORM and `Fastify` for the REST part.
 
+## Missing On This Version
+
+- Add images to vehicles.
+- Tests.
+- Send emails when necessary.
+- Cron Job to check Publications.
+
 
 ## Environment
 
