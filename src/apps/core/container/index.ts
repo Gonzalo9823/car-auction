@@ -7,7 +7,10 @@ import { SignIn } from 'apps/auth/application/sign-in';
 import { SignUp } from 'apps/auth/application/sign-up';
 import { AuthUserDBRepository } from 'apps/auth/domain/auth-user-db-repository';
 import { AuthUserTypeORMRepository } from 'apps/auth/infrastructure/auth-user-typeorm-repository';
+import { CheckGrantByRoleId } from 'apps/core/application/check-grant-by-role-id';
 import { TYPES } from 'apps/core/container/injection-types';
+import { GrantDBRepository } from 'apps/core/domain/grant-db-repository';
+import { GrantTypeORMRepository } from 'apps/core/infrastructure/grant-type-orm-repository';
 import { GetMeById } from 'apps/me/application/get-me-by-id';
 import { MeDBRepository } from 'apps/me/domain/me-db-repository';
 import { MeTypeORMRepository } from 'apps/me/infrastructure/me-type-orm-repository';
@@ -32,5 +35,9 @@ container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserType
 // Me
 container.bind<GetMeById>(TYPES.GetMeById).to(GetMeById);
 container.bind<MeDBRepository>(TYPES.MeDBRepository).to(MeTypeORMRepository);
+
+// Grant
+container.bind<CheckGrantByRoleId>(TYPES.CheckGrantByRoleId).to(CheckGrantByRoleId);
+container.bind<GrantDBRepository>(TYPES.GrantDBRepository).to(GrantTypeORMRepository);
 
 export { container };

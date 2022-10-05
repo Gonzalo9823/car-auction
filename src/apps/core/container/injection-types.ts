@@ -13,4 +13,8 @@ export const TYPES = {
   // Me
   GetMeById: Symbol.for('GetMeById'),
   MeDBRepository: Symbol.for('MeDBRepository'),
+
+  // Grant
+  CheckGrantByRoleId: Symbol.for('CheckGrantByRoleId'),
+  GrantDBRepository: Symbol.for('GrantDBRepository'),
 };
