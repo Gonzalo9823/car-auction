@@ -28,6 +28,7 @@ import { RoleTypeORMRepository } from 'apps/role/infrastructure/role-type-orm-re
 import { AddVehicleToFavorites } from 'apps/vehicle/application/add-vehicle-to-favorites';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
 import { GetFavoriteVehicles } from 'apps/vehicle/application/get-favorites-vehicles';
+import { GetMyVehicle } from 'apps/vehicle/application/get-my-vehicle';
 import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
@@ -67,6 +68,7 @@ container.bind<CreateVehicle>(TYPES.CreateVehicle).to(CreateVehicle);
 container.bind<GetVehicles>(TYPES.GetVehicles).to(GetVehicles);
 container.bind<GetVehicleById>(TYPES.GetVehicleById).to(GetVehicleById);
 container.bind<GetMyVehicles>(TYPES.GetMyVehicles).to(GetMyVehicles);
+container.bind<GetMyVehicle>(TYPES.GetMyVehicle).to(GetMyVehicle);
 container.bind<AddVehicleToFavorites>(TYPES.AddVehicleToFavorites).to(AddVehicleToFavorites);
 container.bind<GetFavoriteVehicles>(TYPES.GetFavoriteVehicles).to(GetFavoriteVehicles);
 container.bind<VehicleDBRepository>(TYPES.VehicleDBRepository).to(VehicleTypeORMRepository);

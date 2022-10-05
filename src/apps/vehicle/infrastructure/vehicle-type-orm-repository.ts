@@ -34,10 +34,16 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return VehicleTransformer.toDomain<Vehicle>(vehicle, true, false);
   }
 
-  async findMine(user: User): Promise<(Omit<Vehicle, 'owner'> & { sold: boolean })[]> {
+  async findManyMine(user: User): Promise<(Omit<Vehicle, 'owner'> & { sold: boolean })[]> {
     const vehicles = await this.getMineVehicles(user.id);
 
     return vehicles.map((vehicle) => VehicleTransformer.toDomain(vehicle, false, true));
+  }
+
+  async findMineById(user: User, id: string): Promise<Vehicle & { sold: boolean }> {
+    const vehicle = await this.getMineVehicleById(user.id, id);
+
+    return VehicleTransformer.toDomain<Vehicle & { sold: boolean }>(vehicle, true, true);
   }
 
   async addAsFavorite(user: User, vehicle: Vehicle): Promise<void> {
@@ -153,6 +159,24 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     });
 
     return vehicles;
+  }
+
+  async getMineVehicleById(userId: UUID, id: UUID): Promise<VehicleModel> {
+    const vehicle = await AppDataSource.getRepository(VehicleModel).findOne({
+      where: {
+        id,
+        owner: {
+          id: userId,
+        },
+      },
+      relations: {
+        owner: true,
+      },
+    });
+
+    if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
+
+    return vehicle;
   }
 
   async addVehicleAsFavorite(user: User, vehicle: VehicleModel): Promise<void> {

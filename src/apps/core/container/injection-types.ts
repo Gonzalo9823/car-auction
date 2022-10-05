@@ -30,6 +30,7 @@ export const TYPES = {
   GetVehicles: Symbol.for('GetVehicles'),
   GetVehicleById: Symbol.for('GetVehicleById'),
   GetMyVehicles: Symbol.for('GetMyVehicles'),
+  GetMyVehicle: Symbol.for('GetMyVehicle'),
   AddVehicleToFavorites: Symbol.for('AddVehicleToFavorites'),
   GetFavoriteVehicles: Symbol.for('GetFavoriteVehicles'),
   VehicleDBRepository: Symbol.for('VehicleDBRepository'),
