@@ -55,7 +55,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
   }
 
   // Private Methods
-  async addDataToUser(user: UserModel, userData: CreateUserDto): Promise<void> {
+  private async addDataToUser(user: UserModel, userData: CreateUserDto): Promise<void> {
     try {
       const { name, phone, email, encryptedPassword, role } = userData;
 
@@ -73,7 +73,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     }
   }
 
-  async getAuthUserByEmail(email: string): Promise<UserModel> {
+  private async getAuthUserByEmail(email: string): Promise<UserModel> {
     const authUser = await AppDataSource.getRepository(UserModel).findOne({
       relations: {
         role: true,
@@ -88,7 +88,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     return authUser;
   }
 
-  async getAuthUserById(id: UUID): Promise<UserModel> {
+  private async getAuthUserById(id: UUID): Promise<UserModel> {
     const authUser = await AppDataSource.getRepository(UserModel).findOne({
       relations: {
         role: true,
@@ -103,7 +103,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     return authUser;
   }
 
-  async addRefreshTokenToUser(user: UserModel, refreshToken: RefreshToken): Promise<void> {
+  private async addRefreshTokenToUser(user: UserModel, refreshToken: RefreshToken): Promise<void> {
     try {
       const newRefreshToken = new RefreshTokenModel();
 
@@ -116,7 +116,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     }
   }
 
-  async checkIfRefreshTokenIsValid(user: UserModel, refreshToken: RefreshToken): Promise<boolean> {
+  private async checkIfRefreshTokenIsValid(user: UserModel, refreshToken: RefreshToken): Promise<boolean> {
     try {
       const _refreshToken = await AppDataSource.getRepository(RefreshTokenModel).findOne({
         where: {
@@ -134,7 +134,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
     }
   }
 
-  async removeRefreshTokenFromUser(user: UserModel, refreshToken: RefreshToken, shouldInvalidate: boolean): Promise<void> {
+  private async removeRefreshTokenFromUser(user: UserModel, refreshToken: RefreshToken, shouldInvalidate: boolean): Promise<void> {
     try {
       if (shouldInvalidate) {
         await AppDataSource.getRepository(RefreshTokenModel)

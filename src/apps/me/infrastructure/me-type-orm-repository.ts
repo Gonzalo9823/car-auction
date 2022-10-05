@@ -36,7 +36,7 @@ export class MeTypeORMRepository implements MeDBRepository {
   }
 
   // Private Methods
-  async getMe(id: UUID): Promise<UserModel> {
+  private async getMe(id: UUID): Promise<UserModel> {
     const me = await AppDataSource.getRepository(UserModel).findOne({
       where: {
         id,
@@ -48,7 +48,7 @@ export class MeTypeORMRepository implements MeDBRepository {
     return me;
   }
 
-  async updateMyData(user: UserModel, meData: UpdateMeDto): Promise<void> {
+  private async updateMyData(user: UserModel, meData: UpdateMeDto): Promise<void> {
     try {
       const { name, phone, email } = meData;
 
@@ -62,7 +62,7 @@ export class MeTypeORMRepository implements MeDBRepository {
     }
   }
 
-  async updateMyPassword(user: UserModel, encryptedPassword: string): Promise<void> {
+  private async updateMyPassword(user: UserModel, encryptedPassword: string): Promise<void> {
     try {
       user.encryptedPassword = encryptedPassword;
 

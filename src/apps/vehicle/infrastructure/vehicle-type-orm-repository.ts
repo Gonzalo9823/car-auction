@@ -58,7 +58,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
   }
 
   // Private Method
-  async addDataToVehicle(vehicle: VehicleModel, user: User, vehicleData: CreateVehicleDto): Promise<void> {
+  private async addDataToVehicle(vehicle: VehicleModel, user: User, vehicleData: CreateVehicleDto): Promise<void> {
     try {
       const { licensePlate, brand, model, year, kilometers } = vehicleData;
 
@@ -75,7 +75,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     }
   }
 
-  async getVehicles(): Promise<VehicleModel[]> {
+  private async getVehicles(): Promise<VehicleModel[]> {
     const vehicles = await AppDataSource.getRepository(VehicleModel).find({
       relations: {
         owner: true,
@@ -91,7 +91,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicles;
   }
 
-  async getVehicleById(id: UUID): Promise<VehicleModel> {
+  private async getVehicleById(id: UUID): Promise<VehicleModel> {
     const vehicle = await AppDataSource.getRepository(VehicleModel).findOne({
       where: {
         id,
@@ -99,7 +99,6 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
       relations: {
         owner: true,
       },
-      cache: 1000,
     });
 
     if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
@@ -107,7 +106,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicle;
   }
 
-  async getVehiclesWithFavorites(userId: UUID): Promise<VehicleModel[]> {
+  private async getVehiclesWithFavorites(userId: UUID): Promise<VehicleModel[]> {
     const vehicles = await AppDataSource.getRepository(VehicleModel).find({
       where: {
         userFavorites: {
@@ -126,7 +125,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicles;
   }
 
-  async getVehicleByIdWithFavorites(id: UUID): Promise<VehicleModel> {
+  private async getVehicleByIdWithFavorites(id: UUID): Promise<VehicleModel> {
     const vehicle = await AppDataSource.getRepository(VehicleModel).findOne({
       where: {
         id,
@@ -135,7 +134,6 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
         owner: true,
         userFavorites: true,
       },
-      cache: 1000,
     });
 
     if (!vehicle) throw new CustomError(ErrorType.NotFound, ErrorCode.DataNotFound, [{ type: ContextErrorType.NotFound, path: 'vehicle' }]);
@@ -143,7 +141,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicle;
   }
 
-  async getMineVehicles(userId: UUID): Promise<VehicleModel[]> {
+  private async getMineVehicles(userId: UUID): Promise<VehicleModel[]> {
     const vehicles = await AppDataSource.getRepository(VehicleModel).find({
       where: {
         owner: {
@@ -161,7 +159,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicles;
   }
 
-  async getMineVehicleById(userId: UUID, id: UUID): Promise<VehicleModel> {
+  private async getMineVehicleById(userId: UUID, id: UUID): Promise<VehicleModel> {
     const vehicle = await AppDataSource.getRepository(VehicleModel).findOne({
       where: {
         id,
@@ -179,7 +177,7 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return vehicle;
   }
 
-  async addVehicleAsFavorite(user: User, vehicle: VehicleModel): Promise<void> {
+  private async addVehicleAsFavorite(user: User, vehicle: VehicleModel): Promise<void> {
     try {
       const userModel = UserTransformer.toInfrastructure(user, 'User');
       vehicle.userFavorites.push(userModel);

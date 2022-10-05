@@ -55,7 +55,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
   }
 
   // Private Methods
-  async addDataToPublication(publication: PublicationModel, user: User, publicationData: CreatePublicationDto): Promise<void> {
+  private async addDataToPublication(publication: PublicationModel, user: User, publicationData: CreatePublicationDto): Promise<void> {
     try {
       const { vehicle, endDate } = publicationData;
 
@@ -73,7 +73,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     }
   }
 
-  async getPublications(): Promise<PublicationModel[]> {
+  private async getPublications(): Promise<PublicationModel[]> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -95,7 +95,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     return publications;
   }
 
-  async getPublicationsByVehicleId(id: UUID): Promise<PublicationModel[]> {
+  private async getPublicationsByVehicleId(id: UUID): Promise<PublicationModel[]> {
     const publications = await AppDataSource.getRepository(PublicationModel).find({
       relations: {
         user: true,
@@ -116,7 +116,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     return publications;
   }
 
-  async getPublicationById(id: UUID): Promise<PublicationModel> {
+  private async getPublicationById(id: UUID): Promise<PublicationModel> {
     const publication = await AppDataSource.getRepository(PublicationModel).findOne({
       relations: {
         user: true,
@@ -134,7 +134,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     return publication;
   }
 
-  async getMyPublications(userId: UUID): Promise<PublicationModel[]> {
+  private async getMyPublications(userId: UUID): Promise<PublicationModel[]> {
     const publications = await AppDataSource.getRepository(PublicationModel).find({
       relations: {
         user: true,
@@ -155,7 +155,7 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     return publications;
   }
 
-  async getBiddedPublications(userId: UUID): Promise<PublicationModel[]> {
+  private async getBiddedPublications(userId: UUID): Promise<PublicationModel[]> {
     const publications = await AppDataSource.getRepository(PublicationModel).find({
       relations: {
         user: true,
