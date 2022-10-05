@@ -13,6 +13,7 @@ import {
 } from 'apps/auth/interface/Schema';
 import { container } from 'apps/core/container';
 import { TYPES } from 'apps/core/container/injection-types';
+import { CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 
 import config from '@/config';
 
@@ -43,6 +44,10 @@ export const AuthController: FastifyPluginAsync = async (fastify): Promise<void>
 
   fastify.post<AuthRefreshPostRequest>('/refresh', { ...refreshPostOpt, preValidation: [fastify.needsRefreshToken] }, async (request, reply) => {
     const { r_token: refreshToken } = request.cookies;
+
+    if (!refreshToken) {
+      throw new CustomError(ErrorType.Unauthorized, ErrorCode.NoTokenSent);
+    }
 
     const refresh = container.get<Refresh>(TYPES.Refresh);
     const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await refresh.execute(request.user.id, refreshToken);
