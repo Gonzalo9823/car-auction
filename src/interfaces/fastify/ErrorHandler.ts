@@ -33,6 +33,10 @@ export const ErrorHandler = async (error: FastifyError, _request: FastifyRequest
       case ErrorType.InternalServerError:
         replyError = new createHttpError.InternalServerError(error.message);
         break;
+
+      case ErrorType.Unauthorized:
+        replyError = new createHttpError.Unauthorized(error.message);
+        break;
     }
   }
 

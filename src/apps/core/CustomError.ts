@@ -4,6 +4,7 @@ export enum ErrorType {
   BadRequest = 'BAD_REQUEST',
   MethodNotAllowed = 'METHOD_NOT_ALLOWED',
   InternalServerError = 'INTERNAL_SERVER_ERROR',
+  Unauthorized = 'UNAUTHORIZED',
 }
 
 export enum ErrorCode {
@@ -13,6 +14,10 @@ export enum ErrorCode {
   CantTransformInfrastructureToDomain = 'CANT_TRANSFORM_INFRASTRUCTURE_TO_DOMAIN',
   IncorrectPassword = 'INCORRECT_PASSWORD',
   EmailOrPasswordIncorrect = 'EMAIL_OR_PASSWORD_INCORRECT',
+  ExpiredToken = 'EXPIRED_TOKEN',
+  InvalidToken = 'INVALID_TOKEN',
+  NoTokenSent = 'NOT_TOKEN_SEND',
+  UserDoesNotHaveGrant = 'USER_DOES_NOT_HAVE_GRANT',
 }
 
 export enum ContextErrorType {
@@ -24,6 +29,7 @@ export enum ContextErrorType {
   Unique = 'UNIQUE',
   UniqueProperty = 'UNIQUE_PROPERTY',
   Transformer = 'TRANSFORMER',
+  Grant = 'GRANT',
 }
 
 export class CustomError extends Error {
