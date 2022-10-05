@@ -84,3 +84,41 @@ export interface MePatchRequest {
     me: Me;
   };
 }
+
+// PATCH /password opt
+export const mePasswordPatchOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Me'],
+    description: 'Route to update my password.',
+    body: yup
+      .object({
+        password: yup.string().required(),
+        newPassword: yup.string().required(),
+      })
+      .required(),
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          me: meSchema,
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface MePasswordPatchRequest {
+  Body: {
+    password: string;
+    newPassword: string;
+  };
+  Params: {};
+  Reply: {
+    me: Me;
+  };
+}

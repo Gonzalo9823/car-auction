@@ -10,4 +10,5 @@ export interface UpdateMeDto {
 export interface MeDBRepository {
   findMyData(id: UUID): Promise<Me>;
   update(id: UUID, meData: UpdateMeDto): Promise<Me>;
+  updatePassword(id: UUID, encryptedPassword: string): Promise<Me>;
 }

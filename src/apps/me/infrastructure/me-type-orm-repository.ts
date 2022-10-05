@@ -27,6 +27,14 @@ export class MeTypeORMRepository implements MeDBRepository {
     return UserTransformer.toDomain(me, 'User');
   }
 
+  async updatePassword(id: UUID, encryptedPassword: string): Promise<User> {
+    const me = await this.getMe(id);
+
+    await this.updateMyPassword(me, encryptedPassword);
+
+    return UserTransformer.toDomain(me, 'User');
+  }
+
   // Private Methods
   async getMe(id: UUID): Promise<UserModel> {
     const me = await AppDataSource.getRepository(UserModel).findOne({
@@ -47,6 +55,16 @@ export class MeTypeORMRepository implements MeDBRepository {
       user.name = name;
       user.phone = phone;
       user.email = email;
+
+      await AppDataSource.getRepository(UserModel).save(user);
+    } catch (err) {
+      throw ErrorHandler(err);
+    }
+  }
+
+  async updateMyPassword(user: UserModel, encryptedPassword: string): Promise<void> {
+    try {
+      user.encryptedPassword = encryptedPassword;
 
       await AppDataSource.getRepository(UserModel).save(user);
     } catch (err) {

@@ -14,6 +14,7 @@ export const TYPES = {
   // Me
   GetMeById: Symbol.for('GetMeById'),
   UpdateMyData: Symbol.for('UpdateMyData'),
+  UpdateMyPassword: Symbol.for('UpdateMyPassword'),
   MeDBRepository: Symbol.for('MeDBRepository'),
 
   // Grant

@@ -14,6 +14,7 @@ import { GrantDBRepository } from 'apps/core/domain/grant-db-repository';
 import { GrantTypeORMRepository } from 'apps/core/infrastructure/grant-type-orm-repository';
 import { GetMeById } from 'apps/me/application/get-me-by-id';
 import { UpdateMyData } from 'apps/me/application/update-my-data';
+import { UpdateMyPassword } from 'apps/me/application/update-my-password';
 import { MeDBRepository } from 'apps/me/domain/me-db-repository';
 import { MeTypeORMRepository } from 'apps/me/infrastructure/me-type-orm-repository';
 import { GetRoleById } from 'apps/role/application/get-role-by-id';
@@ -45,6 +46,7 @@ container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserType
 // Me
 container.bind<GetMeById>(TYPES.GetMeById).to(GetMeById);
 container.bind<UpdateMyData>(TYPES.UpdateMyData).to(UpdateMyData);
+container.bind<UpdateMyPassword>(TYPES.UpdateMyPassword).to(UpdateMyPassword);
 container.bind<MeDBRepository>(TYPES.MeDBRepository).to(MeTypeORMRepository);
 
 // Grant

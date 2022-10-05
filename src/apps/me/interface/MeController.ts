@@ -7,7 +7,8 @@ import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { GetMeById } from 'apps/me/application/get-me-by-id';
 import { UpdateMyData } from 'apps/me/application/update-my-data';
-import { meGetOpt, MeGetRequest, mePatchOpt, MePatchRequest } from 'apps/me/interface/Schema';
+import { UpdateMyPassword } from 'apps/me/application/update-my-password';
+import { meGetOpt, MeGetRequest, mePasswordPatchOpt, MePasswordPatchRequest, mePatchOpt, MePatchRequest } from 'apps/me/interface/Schema';
 
 export const MeController: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.addHook('onRequest', async (request) => {
@@ -31,6 +32,18 @@ export const MeController: FastifyPluginAsync = async (fastify): Promise<void> =
 
     const updateMyData = container.get<UpdateMyData>(TYPES.UpdateMyData);
     const me = await updateMyData.execute(requestUser.id, request.body);
+
+    return reply.send({
+      me,
+    });
+  });
+
+  fastify.patch<MePasswordPatchRequest>('/password', mePasswordPatchOpt, async (request, reply) => {
+    const { password, newPassword } = request.body;
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.UpdateMe);
+
+    const updateMyPassword = container.get<UpdateMyPassword>(TYPES.UpdateMyPassword);
+    const me = await updateMyPassword.execute(requestUser.id, password, newPassword);
 
     return reply.send({
       me,
