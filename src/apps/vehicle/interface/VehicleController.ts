@@ -6,8 +6,16 @@ import { TYPES } from 'apps/core/container/injection-types';
 import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
+import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
-import { vehiclesGetOpt, VehiclesGetRequest, vehiclesPostOpt, VehiclesPostRequest } from 'apps/vehicle/interface/Schema';
+import {
+  vehicleGetOpt,
+  VehicleGetRequest,
+  vehiclesGetOpt,
+  VehiclesGetRequest,
+  vehiclesPostOpt,
+  VehiclesPostRequest,
+} from 'apps/vehicle/interface/Schema';
 
 export const VehicleController: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.addHook('onRequest', async (request) => {
@@ -16,7 +24,7 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
   });
 
   fastify.post<VehiclesPostRequest>('/', vehiclesPostOpt, async (request, reply) => {
-    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.CreateVehicles);
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.CreateVehicle);
 
     const createVehicle = container.get<CreateVehicle>(TYPES.CreateVehicle);
     const vehicle = await createVehicle.execute(requestUser, request.body);
@@ -27,13 +35,25 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
   });
 
   fastify.get<VehiclesGetRequest>('/', vehiclesGetOpt, async (request, reply) => {
-    await authorizeWithGrants(request.user, AvailableGrant.CreateVehicles);
+    await authorizeWithGrants(request.user, AvailableGrant.ViewVehicle);
 
     const getVehicles = container.get<GetVehicles>(TYPES.GetVehicles);
     const vehicles = await getVehicles.execute();
 
     reply.send({
       vehicles,
+    });
+  });
+
+  fastify.get<VehicleGetRequest>('/:vehicleId', vehicleGetOpt, async (request, reply) => {
+    const { vehicleId } = request.params;
+    await authorizeWithGrants(request.user, AvailableGrant.ReadVehicle);
+
+    const getVehicleById = container.get<GetVehicleById>(TYPES.GetVehicleById);
+    const vehicle = await getVehicleById.execute(vehicleId);
+
+    reply.send({
+      vehicle,
     });
   });
 };

@@ -1,6 +1,7 @@
 import type { JSONSchemaType } from 'ajv';
 import { RouteShorthandOptions } from 'fastify';
 
+import { UUID } from 'apps/core/domain/uuid';
 import { Vehicle } from 'apps/vehicle/domain/vehicle';
 
 import { createYupSchema } from 'interfaces/fastify/yup-schema';
@@ -107,5 +108,41 @@ export interface VehiclesGetRequest {
   Params: {};
   Reply: {
     vehicles: Vehicle[];
+  };
+}
+
+// GET /:vehicleId opt
+export const vehicleGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Vehicles'],
+    description: 'Route to get a vehicle.',
+    params: yup
+      .object({
+        vehicleId: yup.string().uuid().required(),
+      })
+      .required(),
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          vehicle: vehicleWithOwnerSchema,
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface VehicleGetRequest {
+  Body: {};
+  Params: {
+    vehicleId: UUID;
+  };
+  Reply: {
+    vehicle: Vehicle;
   };
 }

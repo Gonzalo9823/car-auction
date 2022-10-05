@@ -19,6 +19,7 @@ import { GetRoleByName } from 'apps/role/application/get-role-by-name';
 import { RoleDBRepository } from 'apps/role/domain/role-db-repository';
 import { RoleTypeORMRepository } from 'apps/role/infrastructure/role-type-orm-repository';
 import { CreateVehicle } from 'apps/vehicle/application/create-vehicle';
+import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
 import { VehicleDBRepository } from 'apps/vehicle/domain/vehicles-db-repository';
 import { VehicleTypeORMRepository } from 'apps/vehicle/infrastructure/vehicle-type-orm-repository';
@@ -47,6 +48,7 @@ container.bind<GrantDBRepository>(TYPES.GrantDBRepository).to(GrantTypeORMReposi
 // Vehicle
 container.bind<CreateVehicle>(TYPES.CreateVehicle).to(CreateVehicle);
 container.bind<GetVehicles>(TYPES.GetVehicles).to(GetVehicles);
+container.bind<GetVehicleById>(TYPES.GetVehicleById).to(GetVehicleById);
 container.bind<VehicleDBRepository>(TYPES.VehicleDBRepository).to(VehicleTypeORMRepository);
 
 export { container };
