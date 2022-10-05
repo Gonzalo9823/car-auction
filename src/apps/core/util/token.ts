@@ -66,7 +66,7 @@ export const generateAccessToken = (user: AuthUser): string => {
   };
 
   return jwt.sign(tokenData, config.ACCESS_TOKEN_SECRET, {
-    expiresIn: '3m',
+    expiresIn: config.NODE_ENV === 'production' ? '3m' : '5d',
   });
 };
 
