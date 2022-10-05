@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 
 import { AddRefreshToken } from 'apps/auth/application/add-refresh-token';
+import { CheckRefreshToken } from 'apps/auth/application/check-refresh-token';
 import { GetAuthUserById } from 'apps/auth/application/get-auth-user-by-id';
 import { Refresh } from 'apps/auth/application/refresh';
 import { RemoveRefreshToken } from 'apps/auth/application/remove-refresh-token';
@@ -45,6 +46,7 @@ container.bind<RemoveRefreshToken>(TYPES.RemoveRefreshToken).to(RemoveRefreshTok
 container.bind<SignIn>(TYPES.SignIn).to(SignIn);
 container.bind<GetAuthUserById>(TYPES.GetAuthUserById).to(GetAuthUserById);
 container.bind<Refresh>(TYPES.Refresh).to(Refresh);
+container.bind<CheckRefreshToken>(TYPES.CheckRefreshToken).to(CheckRefreshToken);
 container.bind<AuthUserDBRepository>(TYPES.AuthUserDBRepository).to(AuthUserTypeORMRepository);
 
 // Me

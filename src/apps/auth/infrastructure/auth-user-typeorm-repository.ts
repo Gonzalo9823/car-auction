@@ -128,7 +128,7 @@ export class AuthUserTypeORMRepository implements AuthUserDBRepository {
         },
       });
 
-      return _refreshToken !== undefined;
+      return _refreshToken !== null;
     } catch (err) {
       throw ErrorHandler(err);
     }
