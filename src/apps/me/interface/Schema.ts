@@ -44,3 +44,43 @@ export interface MeGetRequest {
     me: Me;
   };
 }
+
+// PATCH / opt
+export const mePatchOpt: RouteShorthandOptions = {
+  schema: createYupSchema((yup) => ({
+    tags: ['Me'],
+    description: 'Route to update my data.',
+    body: yup
+      .object({
+        name: yup.string().required(),
+        phone: yup.string().required(),
+        email: yup.string().email().required(),
+      })
+      .required(),
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          me: meSchema,
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface MePatchRequest {
+  Body: {
+    name: string;
+    phone: string;
+    email: string;
+  };
+  Params: {};
+  Reply: {
+    me: Me;
+  };
+}
