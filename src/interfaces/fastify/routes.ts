@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 import { AuthController } from 'apps/auth/interface/AuthController';
 import { MeController } from 'apps/me/interface/MeController';
+import { PublicationController } from 'apps/publication/interface/PublicationController';
 import { VehicleController } from 'apps/vehicle/interface/VehicleController';
 
 import { IndexController } from 'interfaces/fastify/controllers/IndexController';
@@ -11,6 +12,7 @@ const _routes: [string, FastifyPluginAsync][] = [
   ['/auth', AuthController],
   ['/vehicles', VehicleController],
   ['/me', MeController],
+  ['/publications', PublicationController],
 ];
 
 export const routes = (app: FastifyInstance): void => {

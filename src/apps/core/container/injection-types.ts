@@ -34,4 +34,10 @@ export const TYPES = {
   AddVehicleToFavorites: Symbol.for('AddVehicleToFavorites'),
   GetFavoriteVehicles: Symbol.for('GetFavoriteVehicles'),
   VehicleDBRepository: Symbol.for('VehicleDBRepository'),
+
+  // Publication
+  CreatePublication: Symbol.for('CreatePublication'),
+  GetPublicationsByVehicleId: Symbol.for('GetPublicationsByVehicleId'),
+  VehicleHasActivePublication: Symbol.for('VehicleHasActivePublication'),
+  PublicationDBRepository: Symbol.for('PublicationDBRepository'),
 };

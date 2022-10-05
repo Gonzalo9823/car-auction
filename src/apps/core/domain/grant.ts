@@ -14,4 +14,9 @@ export enum AvailableGrant {
   CreateVehicle = 'CREATE_VEHICLE',
   ViewVehicle = 'VIEW_VEHICLE',
   ReadVehicle = 'READ_VEHICLE',
+
+  // Publication
+  CreatePublication = 'CREATE_PUBLICATION',
+  ViewPublication = 'VIEW_PUBLICATION',
+  ReadPublication = 'READ_PUBLICATION',
 }

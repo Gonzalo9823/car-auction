@@ -19,6 +19,8 @@ export enum ErrorCode {
   NoTokenSent = 'NOT_TOKEN_SEND',
   UserDoesNotHaveGrant = 'USER_DOES_NOT_HAVE_GRANT',
   CantAddOwnVehicleToFavorites = 'CANT_ADD_OWN_VEHICLE_TO_FAVORITES',
+  VehicleAlreadySold = 'VEHICLE_ALREADY_SOLD',
+  VehicleHasActivePublication = 'VEHICLE_HAS_ACTIVE_PUBLICATION',
 }
 
 export enum ContextErrorType {
