@@ -6,6 +6,7 @@ import { TYPES } from 'apps/core/container/injection-types';
 import { AvailableGrant } from 'apps/core/domain/grant';
 import { needsAccessToken } from 'apps/core/util/token';
 import { CreatePublication } from 'apps/publication/application/create-publication';
+import { GetMyPublications } from 'apps/publication/application/get-my-publications';
 import { GetPublicationById } from 'apps/publication/application/get-publication-by-id';
 import { GetPublications } from 'apps/publication/application/get-publications';
 import {
@@ -13,6 +14,8 @@ import {
   PublicationGetRequest,
   publicationsGetOpt,
   PublicationsGetRequest,
+  publicationsMineGetOpt,
+  PublicationsMineGetRequest,
   publicationsPostOpt,
   PublicationsPostRequest,
 } from 'apps/publication/interface/Schema';
@@ -54,6 +57,17 @@ export const PublicationController: FastifyPluginAsync = async (fastify): Promis
 
     return reply.send({
       publication,
+    });
+  });
+
+  fastify.get<PublicationsMineGetRequest>('/mine', publicationsMineGetOpt, async (request, reply) => {
+    const requestUser = await authorizeWithGrants(request.user, AvailableGrant.CreatePublication);
+
+    const getMyPublications = container.get<GetMyPublications>(TYPES.GetMyPublications);
+    const publications = await getMyPublications.execute(requestUser);
+
+    return reply.send({
+      publications,
     });
   });
 };
