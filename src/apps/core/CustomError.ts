@@ -11,6 +11,8 @@ export enum ErrorCode {
   InvalidData = 'INVALID_DATA',
   ConstraintError = 'CONSTRAINT_ERROR',
   CantTransformInfrastructureToDomain = 'CANT_TRANSFORM_INFRASTRUCTURE_TO_DOMAIN',
+  IncorrectPassword = 'INCORRECT_PASSWORD',
+  EmailOrPasswordIncorrect = 'EMAIL_OR_PASSWORD_INCORRECT',
 }
 
 export enum ContextErrorType {

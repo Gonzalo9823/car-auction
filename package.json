@@ -16,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@shopify/eslint-plugin": "^42.0.1",
+    "@types/bcrypt": "^5.0.0",
     "@types/http-errors": "^1.8.2",
     "@types/node": "^18.7.20",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
@@ -38,6 +39,7 @@
     "@mgcrea/fastify-request-logger": "^0.6.1",
     "@mgcrea/pino-pretty-compact": "^0.6.0",
     "@sodaru/yup-to-json-schema": "^1.0.0",
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.2",
     "fastify": "^4.6.0",
     "http-errors": "^2.0.0",
