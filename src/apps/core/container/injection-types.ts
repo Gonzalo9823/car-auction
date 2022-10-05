@@ -39,5 +39,6 @@ export const TYPES = {
   CreatePublication: Symbol.for('CreatePublication'),
   GetPublicationsByVehicleId: Symbol.for('GetPublicationsByVehicleId'),
   VehicleHasActivePublication: Symbol.for('VehicleHasActivePublication'),
+  GetPublications: Symbol.for('GetPublications'),
   PublicationDBRepository: Symbol.for('PublicationDBRepository'),
 };

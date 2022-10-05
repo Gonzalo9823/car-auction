@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { MoreThan } from 'typeorm';
 
 import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 import { User } from 'apps/core/domain/user';
@@ -58,8 +59,11 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
     try {
       const { vehicle, endDate } = publicationData;
 
+      const _endDate = endDate;
+      _endDate.setHours(0, 0, 0, 0);
+
       publication.vehicle = VehicleTransformer.toInfrastructure(vehicle);
-      publication.endDate = endDate;
+      publication.endDate = _endDate;
       publication.user = UserTransformer.toInfrastructure(user, 'User');
       publication.bids = [];
 
@@ -70,12 +74,18 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
   }
 
   async getPublications(): Promise<PublicationModel[]> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const publications = await AppDataSource.getRepository(PublicationModel).find({
       relations: {
         user: true,
         vehicle: true,
         winner: true,
         bids: true,
+      },
+      where: {
+        endDate: MoreThan(today),
       },
       order: {
         endDate: 'ASC',

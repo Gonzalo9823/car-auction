@@ -106,3 +106,35 @@ export interface PublicationsPostRequest {
     publication: Publication;
   };
 }
+
+// GET / opt
+export const publicationsGetOpt: RouteShorthandOptions = {
+  schema: createYupSchema(() => ({
+    tags: ['Publications'],
+    description: 'Route to get all the active publications.',
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          publications: {
+            type: 'array',
+            items: publicationSchema,
+          },
+        },
+      },
+    },
+    security: [
+      {
+        accessToken: [],
+      },
+    ],
+  })),
+};
+
+export interface PublicationsGetRequest {
+  Body: {};
+  Params: {};
+  Reply: {
+    publications: Publication[];
+  };
+}
