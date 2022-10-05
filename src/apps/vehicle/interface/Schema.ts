@@ -104,11 +104,6 @@ export const vehiclesGetOpt: RouteShorthandOptions = {
         },
       },
     },
-    security: [
-      {
-        accessToken: [],
-      },
-    ],
   })),
 };
 
@@ -138,11 +133,6 @@ export const vehicleGetOpt: RouteShorthandOptions = {
         },
       },
     },
-    security: [
-      {
-        accessToken: [],
-      },
-    ],
   })),
 };
 
