@@ -9,7 +9,7 @@ import { MeDBRepository } from 'apps/me/domain/me-db-repository';
 export class GetMeById {
   constructor(@inject(TYPES.MeDBRepository) private readonly meDBRepository: MeDBRepository) {}
 
-  async excute(id: UUID): Promise<Me> {
+  async execute(id: UUID): Promise<Me> {
     return this.meDBRepository.findMyData(id);
   }
 }
