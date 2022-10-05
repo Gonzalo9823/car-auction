@@ -82,7 +82,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
         user: true,
         vehicle: true,
         winner: true,
-        bids: true,
+        bids: {
+          bidder: true,
+        },
       },
       where: {
         endDate: MoreThan(today),
@@ -101,7 +103,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
         user: true,
         vehicle: true,
         winner: true,
-        bids: true,
+        bids: {
+          bidder: true,
+        },
       },
       where: {
         vehicle: {
@@ -122,7 +126,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
         user: true,
         vehicle: true,
         winner: true,
-        bids: true,
+        bids: {
+          bidder: true,
+        },
       },
       where: {
         id,
@@ -140,7 +146,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
         user: true,
         vehicle: true,
         winner: true,
-        bids: true,
+        bids: {
+          bidder: true,
+        },
       },
       where: {
         user: {

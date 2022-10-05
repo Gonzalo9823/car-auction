@@ -37,7 +37,7 @@ export class PublicationTransformer {
       user: UserTransformer.toDomain(user, 'User'),
       vehicle: VehicleTransformer.toDomain(vehicle, false, false),
       winner: winner ? UserTransformer.toDomain(winner, 'User') : undefined,
-      bids: bids.map((bid) => BidTransformer.toDomain(bid)),
+      bids: bids.map((bid) => BidTransformer.toDomain(bid, false)),
       endDate,
     };
   }

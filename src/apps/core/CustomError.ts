@@ -21,6 +21,9 @@ export enum ErrorCode {
   CantAddOwnVehicleToFavorites = 'CANT_ADD_OWN_VEHICLE_TO_FAVORITES',
   VehicleAlreadySold = 'VEHICLE_ALREADY_SOLD',
   VehicleHasActivePublication = 'VEHICLE_HAS_ACTIVE_PUBLICATION',
+  PublicationHasEnded = 'PUBLICATION_HAS_ENDED',
+  CantBidOnOwnPublication = 'CANT_BID_ON_OWN_PUBLICATION',
+  BidSmallerThanBiggest = 'BID_SMALLER_THAN_BIGGEST',
 }
 
 export enum ContextErrorType {

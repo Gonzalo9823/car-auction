@@ -7,7 +7,7 @@ export interface Publication {
   id: UUID;
   user: User;
   vehicle: Omit<Vehicle, 'owner'>;
-  bids: Bid[];
+  bids: Omit<Bid, 'publication'>[];
   winner?: User;
   endDate: Date;
 }

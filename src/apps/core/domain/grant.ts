@@ -19,4 +19,8 @@ export enum AvailableGrant {
   CreatePublication = 'CREATE_PUBLICATION',
   ViewPublication = 'VIEW_PUBLICATION',
   ReadPublication = 'READ_PUBLICATION',
+
+  // Bid
+  CreateBid = 'CREATE_BID',
+  ViewBid = 'VIEW_BID',
 }
