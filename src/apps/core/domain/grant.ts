@@ -11,5 +11,5 @@ export enum AvailableGrant {
   UpdateMe = 'UPDATE_ME',
 
   // Vehicle
-  CreateVehicle = 'CreateVehicle',
+  CreateVehicle = 'CREATE_VEHICLE',
 }
