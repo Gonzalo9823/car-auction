@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CustomBaseEntity } from 'infrastructure/typeorm/entities/CustomBaseEntity';
 import { RefreshTokenModel } from 'infrastructure/typeorm/entities/RefreshToken';
 import { RoleModel } from 'infrastructure/typeorm/entities/Role';
+import { VehicleModel } from 'infrastructure/typeorm/entities/Vehicle';
 
 @Entity({ name: 'users' })
 export class UserModel extends CustomBaseEntity {
@@ -24,4 +25,7 @@ export class UserModel extends CustomBaseEntity {
 
   @OneToMany(() => RefreshTokenModel, (refreshToken) => refreshToken.user)
   refreshTokens!: RefreshTokenModel[];
+
+  @OneToMany(() => VehicleModel, (vehicle) => vehicle.owner)
+  vehicles!: VehicleModel[];
 }
