@@ -9,4 +9,8 @@ export const TYPES = {
   AddRefreshToken: Symbol.for('AddRefreshToken'),
   SignIn: Symbol.for('SignIn'),
   AuthUserDBRepository: Symbol.for('AuthUserDBRepository'),
+
+  // Me
+  GetMeById: Symbol.for('GetMeById'),
+  MeDBRepository: Symbol.for('MeDBRepository'),
 };
