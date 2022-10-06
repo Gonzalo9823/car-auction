@@ -14,11 +14,80 @@ This apps is written on TypeScript and uses `TypeORM` as the DDBB ORM and `Fasti
 
 ## IMPORTANT
 
-This version of the App does not count with a Front End so to test the different end points you must use SwaggerUI which can be access on [http://localhost:4000/docs](http://localhost:4000/docs).
+This version of the App does not count with a Front End so to test the different end points you must use SwaggerUI which can be accessed on [http://localhost:4000/docs](http://localhost:4000/docs).
 
-## Docker?
+## Docker
 
 Just run `docker-compose up`
+
+## Kubernetes
+
+This app was tested on Kubernetes using [minikube](https://minikube.sigs.k8s.io/docs/start/) on macOS 12.6.
+
+Firtst you need to start minikube with n nodes, for example 2.
+
+```bash
+  minikube start --nodes=2
+```
+
+Then you need to add the necessary addons to minikube.
+
+```bash
+  minikube addons enable registry # This allows kubernetes to find the images locally.
+  minikube addons enable ingress  # This allows nginx-ingress to work.
+```
+
+To verify that `nginx-ingress` was correctly installed you can run:
+
+```bash
+  kubectl get pods -n ingress-nginx
+```
+
+And expect something like the following output:
+
+```bash
+  NAME                                        READY   STATUS      RESTARTS    AGE
+  ingress-nginx-admission-create-g9g49        0/1     Completed   0          11m
+  ingress-nginx-admission-patch-rqp78         0/1     Completed   1          11m
+  ingress-nginx-controller-59b45fb494-26npt   1/1     Running     0          11m
+```
+
+After that you must add the docker image to minikube running the follwing command inside the root directory.
+
+```bash
+  minikube image build --all -t back-end/app .
+```
+
+Then you can apply the `deployment.yml` configuration running the follwing command inside the root directory.
+
+```bash
+  kubectl apply -f deployment.yml
+```
+
+To check that every is working fine you can run:
+
+```bash
+  kubectl get pods
+```
+
+And expect an output like this
+
+```bash
+  NAME                              READY   STATUS    RESTARTS   AGE
+  back-end-56cc68f748-cgmq2         1/1     Running   0          5s
+  back-end-56cc68f748-snfdz         1/1     Running   0          5s
+  car-auction-db-865fbbcd59-zf6lr   1/1     Running   0          47s
+```
+
+If there is a `ErrImagePull` you can try any of the solutions describe [here](https://minikube.sigs.k8s.io/docs/handbook/pushing/#4-pushing-to-an-in-cluster-using-registry-addon).
+
+Finally you can start the app by running.
+
+```bash
+  minikube tunnel
+```
+
+And going to localhost:80.
 
 ## Environment
 
@@ -31,7 +100,6 @@ To run this project you'll need to have:
 And the following environment variables on your `.env` file:
 
 `DATABASE_URL`
-
 
 ## Run Locally
 
@@ -73,20 +141,19 @@ Start the server
 
 **By default the API will run on port 4000.**
 
-
 ## Package Scripts
 
-| Script           	          | Description                                                                                   	|
-|-----------------------------|-----------------------------------------------------------------------------------------------	|
-| prepare          	          | Runs automatically after installing the dependencies to allow the running of .git pre hooks.  	|
-| postinstall      	          | Runs automatically after installing the dependencies to apply some changes done to them.      	|
-| format           	          | Formats the files following the prettier rules.                                               	|
-| lint             	          | It tries to transpile the TypeScript files and checks if the linter rules are being followed. 	|
-| build            	          | Transpiles the TypeScript code to JavaScript (production) code and deletes the src files.     	|
-| start            	          | Starts the project using the generated JavaScript code.                                       	|
-| typeorm          	          | Run TypeORM commands on production code.                                                      	|
-| start:dev        	          | Runs the project on Development mode.                                                         	|
-| typeorm:dev      	          | Run TypeORM commands on development code.                                                     	|
+| Script      | Description                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| prepare     | Runs automatically after installing the dependencies to allow the running of .git pre hooks.  |
+| postinstall | Runs automatically after installing the dependencies to apply some changes done to them.      |
+| format      | Formats the files following the prettier rules.                                               |
+| lint        | It tries to transpile the TypeScript files and checks if the linter rules are being followed. |
+| build       | Transpiles the TypeScript code to JavaScript (production) code and deletes the src files.     |
+| start       | Starts the project using the generated JavaScript code.                                       |
+| typeorm     | Run TypeORM commands on production code.                                                      |
+| start:dev   | Runs the project on Development mode.                                                         |
+| typeorm:dev | Run TypeORM commands on development code.                                                     |
 
 ## Architecture
 
@@ -114,4 +181,3 @@ src
    │   └── interface           # How to send the data E.g. UserController
    └── ...
 ```
-
