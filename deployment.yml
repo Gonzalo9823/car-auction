@@ -1,9 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # Tipo de servicio
 metadata:
-  name: car-auction-db
+  name: car-auction-db # Nombre
 spec:
-  replicas: 1
+  replicas: 1 # Cuantos contenedores corren
   selector:
     matchLabels:
       app: car-auction-db
@@ -16,7 +16,7 @@ spec:
         - name: postgres
           image: postgres:14
           ports:
-            - containerPort: 5432
+            - containerPort: 5432 # Puerto donde corre la aplicación
           env:
             - name: POSTGRES_DB
               value: car_auction
@@ -25,7 +25,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: car_auction
           volumeMounts:
-            - mountPath: '/var/lib/postgresql/data'
+            - mountPath: '/var/lib/postgresql/data' # De aquí para abajo para que la data de la DDBB sea persistente
               name: 'car-auction-pgdata'
       volumes:
         - hostPath:
@@ -36,7 +36,7 @@ spec:
 
 ---
 apiVersion: v1
-kind: Service
+kind: Service # Esto se hace para que se pueda entrar a la app car-auction-db desde "afuera"
 metadata:
   name: car-auction-db
 spec:
@@ -44,8 +44,8 @@ spec:
   selector:
     app: car-auction-db
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: 5432 # Puerto que corre el servicio
+      targetPort: 5432 # Puerto que corre la app
 
 ---
 apiVersion: apps/v1
@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
         - name: back-end
-          imagePullPolicy: Never
+          imagePullPolicy: Never # Descargar de los contenedores locales
           command: ['./deploy']
           image: back-end/app:latest
           ports:
@@ -92,7 +92,7 @@ spec:
 
 ---
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: Ingress # Decide donde va cada request
 metadata:
   name: nginx-ingress
 spec:
