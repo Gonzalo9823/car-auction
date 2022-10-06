@@ -59,6 +59,8 @@ spec:
               value: postgres://car_auction:car_auction@car-auction-db:5432/car_auction
             - name: NODE_ENV
               value: production
+            - name: IS_RUNNING_ON_KUBERNETES
+              value: 'true'
 
 ---
 apiVersion: v1

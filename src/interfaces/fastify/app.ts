@@ -70,7 +70,7 @@ app.register(fastifySwagger, {
     },
     servers: [
       {
-        url: 'http://localhost:4000',
+        url: config.IS_RUNNING_ON_KUBERNETES ? 'http://localhost' : 'http://localhost:4000',
       },
     ],
     components: {
