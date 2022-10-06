@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-auction-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-auction-db
+  template:
+    metadata:
+      labels:
+        app: car-auction-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: car_auction
+            - name: POSTGRES_USER
+              value: car_auction
+            - name: POSTGRES_PASSWORD
+              value: car_auction
+          volumeMounts:
+            - mountPath: '/var/lib/postgresql/data'
+              name: 'car-auction-pgdata'
+      volumes:
+        - hostPath:
+            path: '/home/docker/pgdata'
+          name: car-auction-pgdata
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-end
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: back-end
+  template:
+    metadata:
+      labels:
+        app: back-end
+    spec:
+      containers:
+        - name: back-end
+          imagePullPolicy: Never
+          command: ['./deploy']
+          image: back-end/app:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: DATABASE_URL
+              value: postgres://car_auction:car_auction@car-auction-db:5432/car_auction
+            - name: NODE_ENV
+              value: production
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-end
+spec:
+  type: NodePort
+  selector:
+    app: back-end
+  ports:
+    - port: 4000
+      targetPort: 4000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: back-end
+                port:
+                  number: 4000
