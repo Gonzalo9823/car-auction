@@ -34,6 +34,7 @@ export const TYPES = {
   AddVehicleToFavorites: Symbol.for('AddVehicleToFavorites'),
   GetFavoriteVehicles: Symbol.for('GetFavoriteVehicles'),
   VehicleDBRepository: Symbol.for('VehicleDBRepository'),
+  VehicleSearchRepository: Symbol.for('VehicleSearchRepository'),
 
   // Publication
   CreatePublication: Symbol.for('CreatePublication'),

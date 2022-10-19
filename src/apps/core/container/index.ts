@@ -46,7 +46,9 @@ import { GetMyVehicle } from 'apps/vehicle/application/get-my-vehicle';
 import { GetMyVehicles } from 'apps/vehicle/application/get-my-vehicles';
 import { GetVehicleById } from 'apps/vehicle/application/get-vehicle-by-id';
 import { GetVehicles } from 'apps/vehicle/application/get-vehicles';
+import { VehicleSearchRepository } from 'apps/vehicle/domain/vehicle-search-repository';
 import { VehicleDBRepository } from 'apps/vehicle/domain/vehicles-db-repository';
+import { VehicleOpenSearchRepository } from 'apps/vehicle/infrastructure/vehicle-open-search-repository';
 import { VehicleTypeORMRepository } from 'apps/vehicle/infrastructure/vehicle-type-orm-repository';
 
 const container = new Container({});
@@ -86,6 +88,7 @@ container.bind<GetMyVehicle>(TYPES.GetMyVehicle).to(GetMyVehicle);
 container.bind<AddVehicleToFavorites>(TYPES.AddVehicleToFavorites).to(AddVehicleToFavorites);
 container.bind<GetFavoriteVehicles>(TYPES.GetFavoriteVehicles).to(GetFavoriteVehicles);
 container.bind<VehicleDBRepository>(TYPES.VehicleDBRepository).to(VehicleTypeORMRepository);
+container.bind<VehicleSearchRepository>(TYPES.VehicleSearchRepository).to(VehicleOpenSearchRepository);
 
 // Publication
 container.bind<CreatePublication>(TYPES.CreatePublication).to(CreatePublication);
