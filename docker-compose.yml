@@ -1,3 +1,7 @@
+x-dash-no-sec: &dash-no-sec
+  context: ./
+  dockerfile: ./Dockerfile.opensearch
+
 version: "3.9"
 
 services:
@@ -8,7 +12,7 @@ services:
     environment:
       DATABASE_URL: postgres://car_auction:car_auction@db:5432/car_auction
       NODE_ENV: production
-    command: sh -c './wait-for db:5432 -- npm run typeorm migration:run && npm run start'
+    command: sh -c './wait-for db:5432 -t 0 -- ./wait-for opensearch-node1:9200 -t 0 -- ./wait-for opensearch-node2:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
 
   db:
     image: postgres:14.5-alpine
@@ -20,5 +24,64 @@ services:
     volumes:
       - car_auction:/var/lib/postgresql/data
 
+  opensearch-node1:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch-node1
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node1
+      - discovery.seed_hosts=opensearch-node1,opensearch-node2
+      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
+      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
+      - "DISABLE_SECURITY_PLUGIN=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536 # maximum number of open files for the OpenSearch user, set to at least 65536 on modern systems
+        hard: 65536
+    volumes:
+      - opensearch-data1:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+      - 9600:9600 # required for Performance Analyzer
+  opensearch-node2:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch-node2
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node2
+      - discovery.seed_hosts=opensearch-node1,opensearch-node2
+      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "DISABLE_SECURITY_PLUGIN=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data2:/usr/share/opensearch/data
+  opensearch-dashboards:
+    #image: opensearch-dashboards-no-security
+    build: *dash-no-sec
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_USERNAME: admin
+      OPENSEARCH_PASSWORD: admin
+      DISABLE_SECURITY_PLUGIN: true
+      OPENSEARCH_HOSTS: '["http://opensearch-node1:9200","http://opensearch-node2:9200"]'
+    
 volumes:
   car_auction:
+  opensearch-data1:
+  opensearch-data2:
