@@ -90,9 +90,18 @@ export interface VehiclesPostRequest {
 
 // GET / opt
 export const vehiclesGetOpt: RouteShorthandOptions = {
-  schema: createYupSchema(() => ({
+  schema: createYupSchema((yup) => ({
     tags: ['Vehicles'],
     description: 'Route to get all the available vehicles.',
+    querystring: yup
+      .object({
+        licensePlates: yup.array(yup.string()).ensure(),
+        brands: yup.array().of(yup.string()).ensure(),
+        models: yup.array().of(yup.string()).ensure(),
+        years: yup.array().of(yup.number()).ensure(),
+        kilometers: yup.array().of(yup.number()).ensure(),
+      })
+      .optional(),
     response: {
       200: {
         type: 'object',
@@ -109,7 +118,13 @@ export const vehiclesGetOpt: RouteShorthandOptions = {
 
 export interface VehiclesGetRequest {
   Body: {};
-  Params: {};
+  Querystring: {
+    licensePlates?: string[];
+    brands?: string[];
+    models?: string[];
+    years?: number[];
+    kilometers?: number[];
+  };
   Reply: {
     vehicles: Vehicle[];
   };

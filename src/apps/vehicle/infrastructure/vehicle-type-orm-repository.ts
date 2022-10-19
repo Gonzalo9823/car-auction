@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { Any } from 'typeorm';
 
 import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 import { User } from 'apps/core/domain/user';
@@ -22,8 +23,8 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     return VehicleTransformer.toDomain(newVehicle, false, false);
   }
 
-  async findMany(): Promise<Vehicle[]> {
-    const vehicles = await this.getVehicles();
+  async findMany(ids?: UUID[]): Promise<Vehicle[]> {
+    const vehicles = await this.getVehicles(ids);
 
     return vehicles.map((vehicle) => VehicleTransformer.toDomain<Vehicle>(vehicle, true, false));
   }
@@ -76,13 +77,14 @@ export class VehicleTypeORMRepository implements VehicleDBRepository {
     }
   }
 
-  private async getVehicles(): Promise<VehicleModel[]> {
+  private async getVehicles(ids?: UUID[]): Promise<VehicleModel[]> {
     const vehicles = await AppDataSource.getRepository(VehicleModel).find({
       relations: {
         owner: true,
       },
       where: {
         sold: false,
+        id: ids ? Any(ids) : undefined,
       },
       order: {
         createdAt: 'DESC',

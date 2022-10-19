@@ -37,9 +37,17 @@ export const VehicleController: FastifyPluginAsync = async (fastify): Promise<vo
     });
   });
 
-  fastify.get<VehiclesGetRequest>('/', vehiclesGetOpt, async (_, reply) => {
+  fastify.get<VehiclesGetRequest>('/', vehiclesGetOpt, async (request, reply) => {
+    const { licensePlates, brands, models, years, kilometers } = { ...request.query };
+
     const getVehicles = container.get<GetVehicles>(TYPES.GetVehicles);
-    const vehicles = await getVehicles.execute();
+    const vehicles = await getVehicles.execute({
+      licensePlates,
+      brands,
+      models,
+      years,
+      kilometers,
+    });
 
     reply.send({
       vehicles,

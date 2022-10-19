@@ -12,7 +12,7 @@ export interface CreateVehicleDto {
 
 export interface VehicleDBRepository {
   create(user: User, vehicleData: CreateVehicleDto): Promise<Omit<Vehicle, 'owner'>>;
-  findMany(): Promise<Vehicle[]>;
+  findMany(ids?: UUID[]): Promise<Vehicle[]>;
   findById(id: UUID): Promise<Vehicle>;
   findManyMine(user: User): Promise<(Omit<Vehicle, 'owner'> & { sold: boolean })[]>;
   findMineById(user: User, id: UUID): Promise<Vehicle & { sold: boolean }>;
