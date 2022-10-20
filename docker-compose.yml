@@ -11,6 +11,7 @@ services:
       - 4000:4000
     environment:
       DATABASE_URL: postgres://car_auction:car_auction@db:5432/car_auction
+      OPENSEARCH_URL: http://admin:admin@opensearch-node1:9200
       NODE_ENV: production
     command: sh -c './wait-for db:5432 -t 0 -- ./wait-for opensearch-node1:9200 -t 0 -- ./wait-for opensearch-node2:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
 
@@ -78,7 +79,7 @@ services:
     environment:
       OPENSEARCH_USERNAME: admin
       OPENSEARCH_PASSWORD: admin
-      DISABLE_SECURITY_PLUGIN: true
+      DISABLE_SECURITY_PLUGIN: 'true'
       OPENSEARCH_HOSTS: '["http://opensearch-node1:9200","http://opensearch-node2:9200"]'
     
 volumes:

@@ -74,6 +74,8 @@ spec:
               value: production
             - name: IS_RUNNING_ON_KUBERNETES
               value: 'true'
+            - name: OPENSEARCH_URL
+              value: http://admin:admin@car-auction-open-search-node-1:9200
 
 ---
 apiVersion: v1
