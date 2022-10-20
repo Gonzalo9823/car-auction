@@ -11,5 +11,5 @@ export interface VehicleSarchValues {
 
 export interface VehicleSearchRepository {
   addToIndex(vehicle: Omit<Vehicle, 'owner'>): Promise<void>;
-  search(searchValues: VehicleSarchValues): Promise<UUID[]>;
+  search(searchValues: VehicleSarchValues): Promise<UUID[] | undefined>;
 }

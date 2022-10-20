@@ -17,11 +17,11 @@ export class VehicleOpenSearchRepository implements VehicleSearchRepository {
     });
   }
 
-  async search(searchValues: VehicleSarchValues): Promise<UUID[]> {
+  async search(searchValues: VehicleSarchValues): Promise<UUID[] | undefined> {
     const query = this.getSearchQuery(searchValues);
 
     if (!query) {
-      return [];
+      return undefined;
     }
 
     const response = await OpenSearchClient.search({

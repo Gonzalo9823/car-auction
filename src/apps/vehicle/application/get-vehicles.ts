@@ -15,6 +15,6 @@ export class GetVehicles {
   async execute(searchValues: VehicleSarchValues): Promise<Vehicle[]> {
     const ids = await this.vehicleSearchRepository.search(searchValues);
 
-    return this.vehicleDBRepository.findMany(ids.length > 0 ? ids : undefined);
+    return this.vehicleDBRepository.findMany(ids);
   }
 }
