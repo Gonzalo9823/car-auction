@@ -1,2 +1,2 @@
 #!/bin/sh
-sh -c './wait-for car-auction-db:5432 -- npm run typeorm migration:run && npm run start'
+sh -c './wait-for car-auction-db:5432 -t 0 -- ./wait-for car-auction-open-search-node-1:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
