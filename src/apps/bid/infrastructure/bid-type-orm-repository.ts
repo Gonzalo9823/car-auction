@@ -64,6 +64,9 @@ export class BidTypeORMRepository implements BidDBRepository {
           id: user.id,
         },
       },
+      order: {
+        amount: 'DESC',
+      },
     });
 
     return bids;

@@ -91,6 +91,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
       },
       order: {
         endDate: 'ASC',
+        bids: {
+          amount: 'DESC',
+        },
       },
     });
 
@@ -114,6 +117,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
       },
       order: {
         endDate: 'ASC',
+        bids: {
+          amount: 'DESC',
+        },
       },
     });
 
@@ -132,6 +138,11 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
       },
       where: {
         id,
+      },
+      order: {
+        bids: {
+          amount: 'DESC',
+        },
       },
     });
 
@@ -157,6 +168,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
       },
       order: {
         endDate: 'ASC',
+        bids: {
+          amount: 'DESC',
+        },
       },
     });
 
@@ -182,6 +196,9 @@ export class PublicationTypeORMRepository implements PublicationDBRepository {
       },
       order: {
         endDate: 'ASC',
+        bids: {
+          amount: 'DESC',
+        },
       },
     });
 
