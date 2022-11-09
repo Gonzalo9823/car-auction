@@ -51,6 +51,7 @@
     "@fastify/swagger": "^7.6.0",
     "@mgcrea/fastify-request-logger": "^0.6.1",
     "@mgcrea/pino-pretty-compact": "^0.6.0",
+    "@ngneat/falso": "^6.1.0",
     "@opensearch-project/opensearch": "^2.0.0",
     "@sodaru/yup-to-json-schema": "^1.0.3",
     "bcrypt": "^5.0.1",
