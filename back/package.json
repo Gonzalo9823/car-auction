@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@shopify/eslint-plugin": "^42.0.1",
-    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/http-errors": "^1.8.2",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.20",
@@ -54,7 +54,7 @@
     "@ngneat/falso": "^6.1.0",
     "@opensearch-project/opensearch": "^2.0.0",
     "@sodaru/yup-to-json-schema": "^1.0.3",
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.2",
     "fastify": "^4.6.0",
     "http-errors": "^2.0.0",

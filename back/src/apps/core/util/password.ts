@@ -1,4 +1,4 @@
-import { compare, hash } from 'bcrypt';
+import { compare, hash } from 'bcryptjs';
 
 import { ContextErrorType, CustomError, ErrorCode, ErrorType } from 'apps/core/CustomError';
 

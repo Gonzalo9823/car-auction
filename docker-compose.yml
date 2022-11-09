@@ -17,7 +17,7 @@ services:
     command: sh -c './wait-for db:5432 -t 0 -- ./wait-for opensearch-node1:9200 -t 0 -- ./wait-for opensearch-node2:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
 
   front:
-    build: ../car-action-front/.
+    build: ./front/.
     ports:
       - 3000:3000
     environment:

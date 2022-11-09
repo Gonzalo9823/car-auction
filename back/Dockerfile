@@ -10,7 +10,6 @@ WORKDIR /app
 COPY --chown=app:app package*.json ./
 COPY --chown=app:app patches ./patches/
 RUN npm install
-RUN npm rebuild bcrypt --build-from-source
 
 COPY --chown=app:app . .
 
