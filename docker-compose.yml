@@ -1,12 +1,13 @@
-x-dash-no-sec: &dash-no-sec
+x-dash-no-sec:
+  &dash-no-sec
   context: ./
-  dockerfile: ./Dockerfile.opensearch
+  dockerfile: ./back/Dockerfile.opensearch
 
 version: "3.9"
 
 services:
   api:
-    build: .
+    build: ./back/.
     ports:
       - 4000:4000
     environment:
@@ -14,6 +15,13 @@ services:
       OPENSEARCH_URL: http://admin:admin@opensearch-node1:9200
       NODE_ENV: production
     command: sh -c './wait-for db:5432 -t 0 -- ./wait-for opensearch-node1:9200 -t 0 -- ./wait-for opensearch-node2:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
+
+  front:
+    build: ../car-action-front/.
+    ports:
+      - 3000:3000
+    environment:
+      API_URL: http://api:4000/v1/
 
   db:
     image: postgres:14.5-alpine
@@ -81,7 +89,7 @@ services:
       OPENSEARCH_PASSWORD: admin
       DISABLE_SECURITY_PLUGIN: 'true'
       OPENSEARCH_HOSTS: '["http://opensearch-node1:9200","http://opensearch-node2:9200"]'
-    
+
 volumes:
   car_auction:
   opensearch-data1:
