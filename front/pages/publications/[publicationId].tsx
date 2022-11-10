@@ -51,7 +51,7 @@ const Publication: NextPage<PublicationPageProps> = ({ isLogged, query: { public
       <div className="bg-white">
         <div className="pt-6">
           <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="bg-gray-400 w-full h-80" />
+            <div className="rounded-md bg-gray-200 w-full h-80" />
           </div>
 
           {/* Product info */}
