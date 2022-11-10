@@ -5,6 +5,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+ARG APP_NEXT_PUBLIC_API_PORT
+ENV NEXT_PUBLIC_API_PORT=${APP_NEXT_PUBLIC_API_PORT}
+
+
+
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 
@@ -13,6 +18,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
+
+RUN echo "NEXT_PUBLIC_API_PORT=${APP_NEXT_PUBLIC_API_PORT}" > .env
 
 RUN npm run build
 

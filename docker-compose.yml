@@ -23,7 +23,11 @@ services:
     command: sh -c './wait-for db:5432 -t 0 -- ./wait-for opensearch-node1:9200 -t 0 -- ./wait-for opensearch-node2:9200 -t 0 -- npm run open-search-create-index && npm run typeorm migration:run && npm run start'
 
   front:
-    build: ./front/.
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+      args:
+        - APP_NEXT_PUBLIC_API_PORT=3000
     image: gonzalo9823/car-auction-front
     ports:
       - 3000:3000

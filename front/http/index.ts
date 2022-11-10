@@ -3,7 +3,7 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { setCookie, getCookie } from 'cookies-next';
 
 export const http = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `http://localhost:3000/api`,
   withCredentials: false,
 });
 
@@ -11,7 +11,7 @@ export const fetcher = (url: string) => http.get(url).then((res) => res.data);
 
 createAuthRefreshInterceptor(http, async (failedRequest) => {
   try {
-    const { data } = await axios.post<{ accessToken: string }>('http://localhost:3000/api/auth/refresh', {});
+    const { data } = await axios.post<{ accessToken: string }>(`http://localhost:3000/api/auth/refresh`, {});
     const { accessToken } = data;
 
     failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`;
