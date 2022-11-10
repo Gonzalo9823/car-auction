@@ -1,13 +1,16 @@
 diff --git a/node_modules/ajv/dist/types/json-schema.d.ts b/node_modules/ajv/dist/types/json-schema.d.ts
-index 78ec842..b1cc078 100644
+index 78ec842..e63a8b7 100644
 --- a/node_modules/ajv/dist/types/json-schema.d.ts
 +++ b/node_modules/ajv/dist/types/json-schema.d.ts
-@@ -31,6 +31,8 @@ declare type UncheckedJSONSchemaType<T, IsPartial extends boolean> = (// these t
+@@ -31,7 +31,10 @@ declare type UncheckedJSONSchemaType<T, IsPartial extends boolean> = (// these t
      type: JSONType<"string", IsPartial>;
  } & StringKeywords : T extends boolean ? {
      type: JSONType<"boolean", IsPartial>;
+-} : T extends readonly [any, ...any[]] ? {
 +} & StringKeywords : T extends Date ? {
 +    type: JSONType<"string", IsPartial>;
- } : T extends readonly [any, ...any[]] ? {
++}
++ : T extends readonly [any, ...any[]] ? {
      type: JSONType<"array", IsPartial>;
      items: {
+         readonly [K in keyof T]-?: UncheckedJSONSchemaType<T[K], false> & Nullable<T[K]>;

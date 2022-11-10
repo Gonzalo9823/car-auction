@@ -1,3 +1,4 @@
+import cors from '@fastify/cors';
 import cookie, { FastifyCookieOptions } from '@fastify/cookie';
 import formbody from '@fastify/formbody';
 import helmet from '@fastify/helmet';
@@ -30,6 +31,9 @@ app.register(helmet, {
     },
   },
 });
+
+// Disable Cors
+app.register(cors);
 
 // Add Logger
 app.register(requestLogger);
