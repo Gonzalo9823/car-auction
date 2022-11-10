@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY --chown=app:app package*.json ./
 COPY --chown=app:app patches ./patches/
-RUN npm install
+RUN npm ci
 
 COPY --chown=app:app . .
 
