@@ -10,15 +10,16 @@ This apps is written on TypeScript and uses `TypeORM` as the DDBB ORM and `Fasti
 - Tests.
 - Send emails when necessary.
 - Cron Job to check Publications.
-- Front End
 
 ## IMPORTANT
 
-This version of the App does not count with a Front End so to test the different end points you must use SwaggerUI which can be accessed on [http://localhost:4000/docs](http://localhost:4000/docs).
+The is currently a problem with Kubernetes and the app runs but there is a problem with NextJS being use as a proxy.
 
 ## Docker
 
 Just run `docker-compose up`
+
+The back will be running on port `4000` and the front on port `3000`.
 
 ## Kubernetes
 
@@ -55,7 +56,8 @@ And expect something like the following output:
 After that you must add the docker image to minikube running the follwing command inside the root directory.
 
 ```bash
-  minikube image build --all -t back-end/app .
+  minikube image build --all -t back-end/app  back/.
+  minikube image build --all -t front-end/app front/.
 ```
 
 Then you can apply the `deployment.yml` configuration running the follwing command inside the root directory.
@@ -99,7 +101,8 @@ To run this project you'll need to have:
 
 And the following environment variables on your `.env` file:
 
-`DATABASE_URL`
+- `DATABASE_URL`
+- `APP_NEXT_PUBLIC_API_PORT`
 
 ## Run Locally
 
@@ -140,6 +143,31 @@ Start the server
 ```
 
 **By default the API will run on port 4000.**
+
+## Deployment
+
+You can deploy the app to an AWS ECS via Terraform.
+
+### What you'll need
+
+- `terraform cli` installed on your system.
+- Updating the variables `access_key` and `secret_key` on `versions.tf`.
+
+### Commands to deploy
+
+```bash
+  terraform init
+```
+
+```bash
+  terraform plan -out="tfplan"
+```
+
+```bash
+  terraform apply "tfplan"
+```
+
+**Currently only the front is deployed.**
 
 ## Package Scripts
 
